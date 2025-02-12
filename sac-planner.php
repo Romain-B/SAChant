@@ -1,10 +1,10 @@
 <?php
 /**
- * Plugin Name: SAL Planner
+ * Plugin Name: SAChant
  * Plugin URI:  n/a
  * Description: Allows users to plan and calculate activities dynamically.
  * Version:     0.1
- * Author:      RoB, Lucas, Bathilde
+ * Author:      Romain B, Lucas, Bathilde
  * Author URI:  n/a
  * License:     GPL2
  */
