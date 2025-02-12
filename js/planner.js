@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Link page elements (defined in the php file) to variables 
     const activitySelect = document.getElementById("activity-select");
     const scheduleBody = document.getElementById("schedule-body");
     const selectedActivitiesList = document.getElementById("selected-activities");
@@ -6,9 +7,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const totalPriceElement = document.getElementById("total-price");
     const warningMessage = document.getElementById("warning-message");
 
-    let selectedActivities = [];
+    
+    let selectedActivities = [];  // Array to store selected activities
     let dailyActivityTime = {}; // Track hours spent per day
 
+    // hard code for the activities
+    // Includes : days (potentially multiple), time (range), price, duration (h for counting), 
+    //     type (to track duration, e.g. for singing only), and a "recurring" tag for activities over several days.  
     const activities = {
         "Yoga": { days: ["Monday"], time: "10:00 - 11:00", price: 20, duration: 1, type: "Sports" },
         "Coding Bootcamp": { days: ["Monday"], time: "11:30 - 13:30", price: 50, duration: 2, type: "Education" },
@@ -53,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
             priceDetailsList.appendChild(priceItem);
         });
 
-        totalPriceElement.innerText = `Total Price: $${total}`;
+        totalPriceElement.innerText = `Prix total: €${total}`;
     }
 
     window.removeActivity = function(activity) {
