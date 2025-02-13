@@ -4,11 +4,13 @@ document.addEventListener("DOMContentLoaded", function () {
     let calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: "timeGridWeek",
         allDaySlot: false,
+		slotMinTime: "09:00:00"
+		slotMaxTime: "22:30:00"
         slotDuration: "00:15:00",
         headerToolbar: {
-            left: "prev,next today",
-            center: "title",
-            right: "timeGridWeek"
+            left: "",
+            center: "",
+            right: ""
         },
         events: []
     });
