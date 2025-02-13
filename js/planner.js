@@ -3,6 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: "timeGridWeek",
+		locale: "fr",
         allDaySlot: false,
 		slotMinTime: "09:00:00",
 		slotMaxTime: "22:30:00",

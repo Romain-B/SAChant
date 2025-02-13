@@ -42,7 +42,7 @@ function bootcamp_schedule_assets() {
         'bootcamp-schedule-css',
         plugin_dir_url(__FILE__) . 'css/schedule-style.css',
         array(),
-        filemtime(plugin_dir_url(__FILE__) . 'js/planner.js')
+        filemtime(plugin_dir_url(__FILE__) . 'css/schedule-style.css')
     );
 }
 
