@@ -15,7 +15,7 @@ if (!defined('ABSPATH')) {
 function bootcamp_schedule_assets() {
     wp_enqueue_script(								// WP function to load scripts
         'planner',									// Script unique handle (tag)
-        plugin_dir_url(__FILE__) . 'js/planner.js', // Path to the script in plugin
+        plugin_dir_url(__FILE__) . 'js/planner2.js', // Path to the script in plugin
         array('jquery'),							// Load jquery as dependecy
         null,										// No version specified
         true										// Load in footer (apparently improves performance)
@@ -25,66 +25,83 @@ add_action('wp_enqueue_scripts', 'bootcamp_schedule_assets'); // tells WP to loa
 
 // Shortcode Function
 function bootcamp_schedule_shortcode() {
-    ob_start(); // start output buffering (captures HTML instead of just printing to the page, for potential modifs)
+    ob_start();
     ?>
-    <div>
-        <h2>Bootcamp Planner</h2>
 
-        <!-- Activity Selection Menu -->
-        <label>Select Activities:</label>
-        <select id="activity-select">
-            <option value="">-- Choose an Activity --</option>
-            <option value="Yoga">Yoga (Mon 10:00 - 11:00)</option>
-            <option value="Coding Bootcamp">Coding Bootcamp (Mon 11:30 - 13:30)</option>
-            <option value="Swimming">Swimming (Tue 14:00 - 15:00)</option>
-            <option value="Boxing">Boxing (Wed 16:00 - 17:00)</option>
-            <option value="Running">Running (Mon 09:00 - 10:30)</option>
-            <option value="Painting Class">Painting Class (Tue 15:00 - 16:00)</option>
-            <option value="Weightlifting">Weightlifting (Wed 15:30 - 16:30)</option>
-            <option value="Machine Learning Workshop">Machine Learning Workshop (Mon 14:00 - 16:00)</option>
-            <option value="Dance Class">Dance Class (Tue 16:00 - 17:30)</option>
-            <option value="Photography Class">Photography Class (Wed 17:00 - 18:00)</option>
-            <option value="Morning Stretch">Morning Stretch (Daily 08:00 - 09:00) [Recurring]</option>
-        </select>
+    <div id="bootcamp-scheduler">
+        <h2>Customize Your Bootcamp Week</h2>
+        
+        <!-- Activity Selection -->
+        <div id="activity-selection">
+            <h3>Select Your Activities:</h3>
+            <form id="activity-form">
+                <div class="activity-category">
+                    <h4>Wellness</h4>
+                    <label><input type="checkbox" class="activity-checkbox" value="Yoga"> Yoga ($15)</label><br>
+                    <label><input type="checkbox" class="activity-checkbox" value="Morning Stretch"> Morning Stretch (Daily, $40)</label><br>
+                    <label><input type="checkbox" class="activity-checkbox" value="Dance Class"> Dance Class ($30)</label><br>
+                </div>
 
-        <!-- Weekly Schedule Display -->
-        <h2>Week Schedule</h2>
-        <table border="1">
+                <div class="activity-category">
+                    <h4>Education</h4>
+                    <label><input type="checkbox" class="activity-checkbox" value="Coding Bootcamp"> Coding Bootcamp ($50)</label><br>
+                    <label><input type="checkbox" class="activity-checkbox" value="Machine Learning Workshop"> Machine Learning Workshop ($60)</label><br>
+                </div>
+
+                <div class="activity-category">
+                    <h4>Sports</h4>
+                    <label><input type="checkbox" class="activity-checkbox" value="Swimming"> Swimming ($20)</label><br>
+                    <label><input type="checkbox" class="activity-checkbox" value="Boxing"> Boxing ($25)</label><br>
+                    <label><input type="checkbox" class="activity-checkbox" value="Running"> Running ($10)</label><br>
+                    <label><input type="checkbox" class="activity-checkbox" value="Weightlifting"> Weightlifting ($22)</label><br>
+                </div>
+
+                <div class="activity-category">
+                    <h4>Arts</h4>
+                    <label><input type="checkbox" class="activity-checkbox" value="Painting Class"> Painting Class ($18)</label><br>
+                    <label><input type="checkbox" class="activity-checkbox" value="Photography Class"> Photography Class ($20)</label><br>
+                </div>
+
+                <!-- Meal Plan -->
+                <h3>Add Meal Plan:</h3>
+                <label><input type="checkbox" id="meal-checkbox"> Include Meals for the Week ($50)</label><br>
+            </form>
+        </div>
+
+        <!-- Warning Message -->
+        <p id="warning-message" style="color: red;"></p>
+
+        <!-- Schedule Table -->
+        <h3>Your Weekly Schedule:</h3>
+        <table id="schedule-table" border="1">
             <thead>
                 <tr>
                     <th>Day</th>
-                    <th>08:00 - 10:00</th>
-                    <th>10:00 - 12:00</th>
-                    <th>12:00 - 14:00</th>
-                    <th>14:00 - 16:00</th>
-                    <th>16:00 - 18:00</th>
+                    <?php for ($i = 10; $i < 20; $i++) { ?>
+                        <th><?php echo $i . ":00"; ?></th>
+                    <?php } ?>
                 </tr>
             </thead>
             <tbody id="schedule-body">
-                <tr><td>Monday</td><td colspan="5"></td></tr>
-                <tr><td>Tuesday</td><td colspan="5"></td></tr>
-                <tr><td>Wednesday</td><td colspan="5"></td></tr>
-                <tr><td>Thursday</td><td colspan="5"></td></tr>
-                <tr><td>Friday</td><td colspan="5"></td></tr>
-                <tr><td>Saturday</td><td colspan="5"></td></tr>
-                <tr><td>Sunday</td><td colspan="5"></td></tr>
+                <?php
+                $days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+                foreach ($days as $day) {
+                    echo "<tr><td>$day</td>";
+                    for ($i = 10; $i < 20; $i++) {
+                        echo "<td></td>";
+                    }
+                    echo "</tr>";
+                }
+                ?>
             </tbody>
         </table>
 
-        <!-- Selected Activities (dynamic display of selected stuff) -->
-        <h2>Selected Activities</h2>
-        <ul id="selected-activities"></ul>
-		
-		<!-- Warning for potential activity overload per day -->
-        <p id="warning-message" style="color: red; font-weight: bold;"></p>
-
         <!-- Price Details -->
-        <h3>Détail du prix</h3>
+        <h3>Price Breakdown:</h3>
         <ul id="price-details"></ul>
-        <h3 id="total-price">Total: €0</h3>
-
-
+        <h4 id="total-price">Total Price: $0</h4>
     </div>
+
     <?php
     return ob_get_clean();
 }
