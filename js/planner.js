@@ -1,76 +1,117 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Link page elements (defined in the php file) to variables 
-    const activitySelect = document.getElementById("activity-select");
-    const scheduleBody = document.getElementById("schedule-body");
-    const selectedActivitiesList = document.getElementById("selected-activities");
-    const priceDetailsList = document.getElementById("price-details");
-    const totalPriceElement = document.getElementById("total-price");
-    const warningMessage = document.getElementById("warning-message");
+    let calendarEl = document.getElementById("calendar");
 
-    
-    let selectedActivities = [];  // Array to store selected activities
-    let dailyActivityTime = {}; // Track hours spent per day
+    let calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: "timeGridWeek",
+        allDaySlot: false,
+		slotMinTime: "09:00:00"
+		slotMaxTime: "22:30:00"
+        slotDuration: "00:15:00",
+        headerToolbar: {
+            left: "",
+            center: "",
+            right: ""
+        },
+        events: []
+    });
 
-    // hard code for the activities
-    // Includes : days (potentially multiple), time (range), price, duration (h for counting), 
-    //     type (to track duration, e.g. for singing only), and a "recurring" tag for activities over several days.  
+    calendar.render();
+
+    let selectedActivities = [];
+    let mealsSelected = false;
+    const mealPrice = 50;
+
     const activities = {
-        "Yoga": { days: ["Monday"], time: "10:00 - 11:00", price: 20, duration: 1, type: "Sports" },
-        "Coding Bootcamp": { days: ["Monday"], time: "11:30 - 13:30", price: 50, duration: 2, type: "Education" },
-        "Swimming": { days: ["Tuesday"], time: "14:00 - 15:00", price: 30, duration: 1, type: "Sports" },
-        "Boxing": { days: ["Wednesday"], time: "16:00 - 17:00", price: 25, duration: 1, type: "Sports" },
-        "Running": { days: ["Monday"], time: "09:00 - 10:30", price: 15, duration: 1.5, type: "Sports" },
-        "Painting Class": { days: ["Tuesday"], time: "15:00 - 16:00", price: 40, duration: 1, type: "Art" },
-        "Weightlifting": { days: ["Wednesday"], time: "15:30 - 16:30", price: 35, duration: 1, type: "Sports" },
-        "Machine Learning Workshop": { days: ["Monday"], time: "14:00 - 16:00", price: 60, duration: 2, type: "Education" },
-        "Dance Class": { days: ["Tuesday"], time: "16:00 - 17:30", price: 30, duration: 1.5, type: "Sports" },
-        "Photography Class": { days: ["Wednesday"], time: "17:00 - 18:00", price: 45, duration: 1, type: "Art" },
-        "Morning Stretch": { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], time: "08:00 - 09:00", price: 50, duration: 1, type: "Sports", recurring: true },
+        "Yoga": { days: ["Monday"], start: "10:00", duration: 60, price: 15 },
+        "Coding Bootcamp": { days: ["Monday"], start: "11:30", duration: 120, price: 50 },
+        "Swimming": { days: ["Tuesday"], start: "14:00", duration: 60, price: 20 },
+        "Boxing": { days: ["Wednesday"], start: "16:00", duration: 60, price: 25 },
+        "Morning Stretch": { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], start: "08:00", duration: 60, price: 40, recurring: true }
     };
 
-    function updateSchedule() {
-        scheduleBody.querySelectorAll("td[colspan]").forEach(cell => cell.innerHTML = ""); 
-        selectedActivitiesList.innerHTML = "";
-        priceDetailsList.innerHTML = "";
-        let total = 0;
-        dailyActivityTime = {}; 
-
-        selectedActivities.forEach(activity => {
-            let act = activities[activity];
-            let price = act.recurring ? act.price : act.price;
-            total += price;
-
-            act.days.forEach(day => {
-                let row = [...scheduleBody.children].find(r => r.children[0].textContent === day);
-                let cell = row.children[Math.floor(Math.random() * 5) + 1]; 
-                cell.innerHTML = activity;
-                
-                if (!dailyActivityTime[day]) dailyActivityTime[day] = 0;
-                dailyActivityTime[day] += act.duration;
-            });
-
-            let listItem = document.createElement("li");
-            listItem.innerHTML = `${activity} <button onclick="removeActivity('${activity}')">Remove</button>`;
-            selectedActivitiesList.appendChild(listItem);
-
-            let priceItem = document.createElement("li");
-            priceItem.innerText = `${activity}: $${price}`;
-            priceDetailsList.appendChild(priceItem);
+    document.querySelectorAll(".activity-checkbox").forEach(checkbox => {
+        checkbox.addEventListener("change", function () {
+            const activityName = this.value;
+            if (this.checked) {
+                if (addActivity(activityName)) {
+                    updateUI();
+                } else {
+                    this.checked = false;
+                }
+            } else {
+                removeActivity(activityName);
+                updateUI();
+            }
         });
+    });
 
-        totalPriceElement.innerText = `Prix total: €${total}`;
+    document.getElementById("meal-checkbox").addEventListener("change", function () {
+        mealsSelected = this.checked;
+        updateUI();
+    });
+
+    function addActivity(activityName) {
+        const activity = activities[activityName];
+        if (!activity) return false;
+
+        for (let day of activity.days) {
+            let startTime = activity.start;
+            let duration = activity.duration;
+            let endTime = addMinutes(startTime, duration);
+
+            if (calendar.getEvents().some(event => event.startStr.includes(day) && event.startStr.includes(startTime))) {
+                alert("❌ Activity conflict detected!");
+                return false;
+            }
+
+            calendar.addEvent({
+                title: activityName,
+                start: `${day}T${startTime}`,
+                end: `${day}T${endTime}`,
+                color: "blue"
+            });
+        }
+
+        selectedActivities.push(activityName);
+        return true;
     }
 
-    window.removeActivity = function(activity) {
-        selectedActivities = selectedActivities.filter(a => a !== activity);
-        updateSchedule();
-    };
+    function removeActivity(activityName) {
+        calendar.getEvents().forEach(event => {
+            if (event.title === activityName) {
+                event.remove();
+            }
+        });
 
-    activitySelect.addEventListener("change", function () {
-        let selected = activitySelect.value;
-        if (!selected || selectedActivities.includes(selected)) return;
+        selectedActivities = selectedActivities.filter(a => a !== activityName);
+    }
 
-        selectedActivities.push(selected);
-        updateSchedule();
-    });
+    function updateUI() {
+        updatePriceDetails();
+    }
+
+    function updatePriceDetails() {
+        let priceList = document.getElementById("price-details");
+        let totalPriceElement = document.getElementById("total-price");
+        priceList.innerHTML = "";
+        let totalPrice = mealsSelected ? mealPrice : 0;
+
+        selectedActivities.forEach(activityName => {
+            let price = activities[activityName].price;
+            let listItem = document.createElement("li");
+            listItem.innerText = `${activityName}: $${price}`;
+            priceList.appendChild(listItem);
+            totalPrice += price;
+        });
+
+        totalPriceElement.innerText = `Total Price: $${totalPrice}`;
+    }
+
+    function addMinutes(time, mins) {
+        let [hours, minutes] = time.split(":").map(Number);
+        minutes += mins;
+        hours += Math.floor(minutes / 60);
+        minutes %= 60;
+        return `${hours}:${minutes < 10 ? "0" + minutes : minutes}`;
+    }
 });

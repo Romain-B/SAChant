@@ -31,7 +31,7 @@ function bootcamp_schedule_assets() {
     // Custom JS for handling the schedule
     wp_enqueue_script(
         'bootcamp-schedule-js',
-        plugin_dir_url(__FILE__) . 'js/planner2.js',
+        plugin_dir_url(__FILE__) . 'js/planner.js',
         array('jquery', 'fullcalendar-js'),
         null,
         true
