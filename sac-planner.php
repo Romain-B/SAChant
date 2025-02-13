@@ -11,17 +11,6 @@ if (!defined('ABSPATH')) {
     exit; // Prevent direct access
 }
 
-// Load JavaScript for reactive components
-function bootcamp_schedule_assets() {
-    wp_enqueue_script(								// WP function to load scripts
-        'planner',									// Script unique handle (tag)
-        plugin_dir_url(__FILE__) . 'js/planner2.js', // Path to the script in plugin
-        array('jquery'),							// Load jquery as dependecy
-        null,										// No version specified
-        true										// Load in footer (apparently improves performance)
-    );
-}
-
 // Enqueue FullCalendar.js and custom script
 function bootcamp_schedule_assets() {
 	// what this does (per asset):
