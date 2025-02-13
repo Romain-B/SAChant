@@ -33,7 +33,7 @@ function bootcamp_schedule_assets() {
         'bootcamp-schedule-js',
         plugin_dir_url(__FILE__) . 'js/planner.js',
         array('jquery', 'fullcalendar-js'),
-        null,
+        filemtime(plugin_dir_url(__FILE__) . 'js/planner.js'),
         true
     );
 
@@ -42,7 +42,7 @@ function bootcamp_schedule_assets() {
         'bootcamp-schedule-css',
         plugin_dir_url(__FILE__) . 'css/schedule-style.css',
         array(),
-        null
+        filemtime(plugin_dir_url(__FILE__) . 'js/planner.js')
     );
 }
 
