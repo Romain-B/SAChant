@@ -1,11 +1,9 @@
 <?php
 /**
  * Plugin Name: SAChant
- * Plugin URI:  n/a
  * Description: Allows users to plan and calculate activities dynamically.
  * Version:     0.1
  * Author:      Romain B, Lucas, Bathilde
- * Author URI:  n/a
  * License:     GPL2
  */
 
@@ -13,26 +11,26 @@ if (!defined('ABSPATH')) {
     exit; // Prevent direct access
 }
 
-// Enqueue JavaScript
+// Load JavaScript for reactive components
 function bootcamp_schedule_assets() {
-    wp_enqueue_script(
-        'schedule-planner',
-        plugin_dir_url(__FILE__) . 'js/planner.js',
-        array('jquery'),
-        null,
-        true
+    wp_enqueue_script(								// WP function to load scripts
+        'planner',									// Script unique handle (tag)
+        plugin_dir_url(__FILE__) . 'js/planner.js', // Path to the script in plugin
+        array('jquery'),							// Load jquery as dependecy
+        null,										// No version specified
+        true										// Load in footer (apparently improves performance)
     );
 }
-add_action('wp_enqueue_scripts', 'bootcamp_schedule_assets');
+add_action('wp_enqueue_scripts', 'bootcamp_schedule_assets'); // tells WP to load the function with the scripts on a page
 
 // Shortcode Function
 function bootcamp_schedule_shortcode() {
-    ob_start();
+    ob_start(); // start output buffering (captures HTML instead of just printing to the page, for potential modifs)
     ?>
     <div>
         <h2>Bootcamp Planner</h2>
 
-        <!-- Activity Selection -->
+        <!-- Activity Selection Menu -->
         <label>Select Activities:</label>
         <select id="activity-select">
             <option value="">-- Choose an Activity --</option>
@@ -73,17 +71,19 @@ function bootcamp_schedule_shortcode() {
             </tbody>
         </table>
 
-        <!-- Selected Activities -->
+        <!-- Selected Activities (dynamic display of selected stuff) -->
         <h2>Selected Activities</h2>
         <ul id="selected-activities"></ul>
+		
+		<!-- Warning for potential activity overload per day -->
+        <p id="warning-message" style="color: red; font-weight: bold;"></p>
 
         <!-- Price Details -->
-        <h3>Price Breakdown</h3>
+        <h3>Détail du prix</h3>
         <ul id="price-details"></ul>
-        <h3 id="total-price">Total Price: $0</h3>
+        <h3 id="total-price">Total: €0</h3>
 
-        <!-- Warnings -->
-        <p id="warning-message" style="color: red; font-weight: bold;"></p>
+
     </div>
     <?php
     return ob_get_clean();
