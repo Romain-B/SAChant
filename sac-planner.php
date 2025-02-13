@@ -21,16 +21,59 @@ function bootcamp_schedule_assets() {
         true										// Load in footer (apparently improves performance)
     );
 }
+
+// Enqueue FullCalendar.js and custom script
+function bootcamp_schedule_assets() {
+	// what this does (per asset):
+	// 	WP function to load scripts
+	// 	Script unique handle (tag)
+	//  Path to the script in plugin
+	//  Load jquery as dependency if necessary
+    
+	// FullCalendar CSS
+    wp_enqueue_style(
+        'fullcalendar-css',
+        'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.8/main.min.css',
+        array(),
+        null
+    );
+
+    // FullCalendar JS
+    wp_enqueue_script(
+        'fullcalendar-js',
+        'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.8/main.min.js',
+        array('jquery'),
+        null,
+        true
+    );
+
+    // Custom JS for handling the schedule
+    wp_enqueue_script(
+        'bootcamp-schedule-js',
+        plugin_dir_url(__FILE__) . 'js/schedule-planner.js',
+        array('jquery', 'fullcalendar-js'),
+        null,
+        true
+    );
+
+    // Custom CSS for styling
+    wp_enqueue_style(
+        'bootcamp-schedule-css',
+        plugin_dir_url(__FILE__) . 'css/schedule-style.css',
+        array(),
+        null
+    );
+}
+
 add_action('wp_enqueue_scripts', 'bootcamp_schedule_assets'); // tells WP to load the function with the scripts on a page
 
-// Shortcode Function
 function bootcamp_schedule_shortcode() {
     ob_start();
     ?>
-
+    
     <div id="bootcamp-scheduler">
         <h2>Customize Your Bootcamp Week</h2>
-        
+
         <!-- Activity Selection -->
         <div id="activity-selection">
             <h3>Select Your Activities:</h3>
@@ -71,30 +114,9 @@ function bootcamp_schedule_shortcode() {
         <!-- Warning Message -->
         <p id="warning-message" style="color: red;"></p>
 
-        <!-- Schedule Table -->
+        <!-- FullCalendar Schedule Display -->
         <h3>Your Weekly Schedule:</h3>
-        <table id="schedule-table" border="1">
-            <thead>
-                <tr>
-                    <th>Day</th>
-                    <?php for ($i = 10; $i < 20; $i++) { ?>
-                        <th><?php echo $i . ":00"; ?></th>
-                    <?php } ?>
-                </tr>
-            </thead>
-            <tbody id="schedule-body">
-                <?php
-                $days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
-                foreach ($days as $day) {
-                    echo "<tr><td>$day</td>";
-                    for ($i = 10; $i < 20; $i++) {
-                        echo "<td></td>";
-                    }
-                    echo "</tr>";
-                }
-                ?>
-            </tbody>
-        </table>
+        <div id="calendar"></div>
 
         <!-- Price Details -->
         <h3>Price Breakdown:</h3>
@@ -105,7 +127,4 @@ function bootcamp_schedule_shortcode() {
     <?php
     return ob_get_clean();
 }
-
-
-
 add_shortcode('bootcamp_schedule', 'bootcamp_schedule_shortcode');
