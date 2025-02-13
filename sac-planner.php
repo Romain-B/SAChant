@@ -19,27 +19,19 @@ function bootcamp_schedule_assets() {
 	//  Path to the script in plugin
 	//  Load jquery as dependency if necessary
     
-	// FullCalendar CSS
-    wp_enqueue_style(
-        'fullcalendar-css',
-        'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.8/main.min.css',
-        array(),
-        null
-    );
-
     // FullCalendar JS
     wp_enqueue_script(
         'fullcalendar-js',
-        'https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/6.1.8/main.min.js',
-        array('jquery'),
+        'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js',
+        array(),
         null,
         true
     );
-
+	
     // Custom JS for handling the schedule
     wp_enqueue_script(
         'bootcamp-schedule-js',
-        plugin_dir_url(__FILE__) . 'js/schedule-planner.js',
+        plugin_dir_url(__FILE__) . 'js/planner2.js',
         array('jquery', 'fullcalendar-js'),
         null,
         true
