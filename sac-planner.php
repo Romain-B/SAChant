@@ -12,7 +12,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Enqueue FullCalendar.js and custom script
-function bootcamp_schedule_assets() {
+function edt_assets() {
 	// what this does (per asset):
 	// 	WP function to load scripts
 	// 	Script unique handle (tag)
@@ -30,7 +30,7 @@ function bootcamp_schedule_assets() {
 	
     // Custom JS for handling the schedule
     wp_enqueue_script(
-        'bootcamp-schedule-js',
+        'edt-js',
         plugin_dir_url(__FILE__) . 'js/planner.js',
         array('jquery', 'fullcalendar-js'),
         filemtime(plugin_dir_url(__FILE__) . 'js/planner.js'),
@@ -39,55 +39,41 @@ function bootcamp_schedule_assets() {
 
     // Custom CSS for styling
     wp_enqueue_style(
-        'bootcamp-schedule-css',
-        plugin_dir_url(__FILE__) . 'css/schedule-style.css',
+        'edt-css',
+        plugin_dir_url(__FILE__) . 'css/edt-style.css',
         array(),
-        filemtime(plugin_dir_url(__FILE__) . 'css/schedule-style.css')
+        filemtime(plugin_dir_url(__FILE__) . 'css/edt-style.css')
     );
 }
 
-add_action('wp_enqueue_scripts', 'bootcamp_schedule_assets'); // tells WP to load the function with the scripts on a page
+add_action('wp_enqueue_scripts', 'edt_assets'); // tells WP to load the function with the scripts on a page
 
-function bootcamp_schedule_shortcode() {
+function edt_shortcode() {
     ob_start();
     ?>
     
-    <div id="bootcamp-scheduler">
-        <h2>Customize Your Bootcamp Week</h2>
+    <div id="edt">
+        <h2>Organise ta semaine Allez'Chante !</h2>
 
         <!-- Activity Selection -->
         <div id="activity-selection">
-            <h3>Select Your Activities:</h3>
+            <h3>Sélection des activités:</h3>
+			
             <form id="activity-form">
                 <div class="activity-category">
-                    <h4>Wellness</h4>
-                    <label><input type="checkbox" class="activity-checkbox" value="Yoga"> Yoga ($15)</label><br>
-                    <label><input type="checkbox" class="activity-checkbox" value="Morning Stretch"> Morning Stretch (Daily, $40)</label><br>
-                    <label><input type="checkbox" class="activity-checkbox" value="Dance Class"> Dance Class ($30)</label><br>
+                    <h4>Stages à la semaine</h4>
+                    <label><input type="checkbox" class="activity-checkbox" value="diapason">Diapa'Son (50€ (prix test))</label><br>
+                    <label><input type="checkbox" class="activity-checkbox" value="generason">Généra'Son (20€)</label><br>
                 </div>
 
                 <div class="activity-category">
-                    <h4>Education</h4>
-                    <label><input type="checkbox" class="activity-checkbox" value="Coding Bootcamp"> Coding Bootcamp ($50)</label><br>
-                    <label><input type="checkbox" class="activity-checkbox" value="Machine Learning Workshop"> Machine Learning Workshop ($60)</label><br>
-                </div>
-
-                <div class="activity-category">
-                    <h4>Sports</h4>
-                    <label><input type="checkbox" class="activity-checkbox" value="Swimming"> Swimming ($20)</label><br>
-                    <label><input type="checkbox" class="activity-checkbox" value="Boxing"> Boxing ($25)</label><br>
-                    <label><input type="checkbox" class="activity-checkbox" value="Running"> Running ($10)</label><br>
-                    <label><input type="checkbox" class="activity-checkbox" value="Weightlifting"> Weightlifting ($22)</label><br>
-                </div>
-
-                <div class="activity-category">
-                    <h4>Arts</h4>
-                    <label><input type="checkbox" class="activity-checkbox" value="Painting Class"> Painting Class ($18)</label><br>
-                    <label><input type="checkbox" class="activity-checkbox" value="Photography Class"> Photography Class ($20)</label><br>
+                    <h4>Cours de technique vocale</h4>
+                    <label><input type="checkbox" class="activity-checkbox" value="technique_solo">Cours de technique vocale solo</label><br>
+                    <label><input type="checkbox" class="activity-checkbox" value="technique_groupe">Cours de technique vocale en groupe</label><br>
                 </div>
 
                 <!-- Meal Plan -->
-                <h3>Add Meal Plan:</h3>
+                <h3>Repas pour la semaine:</h3>
                 <label><input type="checkbox" id="meal-checkbox"> Include Meals for the Week ($50)</label><br>
             </form>
         </div>
@@ -97,15 +83,15 @@ function bootcamp_schedule_shortcode() {
 
         <!-- FullCalendar Schedule Display -->
         <h3>Your Weekly Schedule:</h3>
-        <div id="calendar"></div>
+        <div id="edt-display"></div>
 
         <!-- Price Details -->
         <h3>Price Breakdown:</h3>
         <ul id="price-details"></ul>
-        <h4 id="total-price">Total Price: $0</h4>
+        <h4 id="total-price">Prix Total: €0</h4>
     </div>
 
     <?php
     return ob_get_clean();
 }
-add_shortcode('bootcamp_schedule', 'bootcamp_schedule_shortcode');
+add_shortcode('edt', 'edt_shortcode');
