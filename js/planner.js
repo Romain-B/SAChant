@@ -140,8 +140,6 @@ document.addEventListener("DOMContentLoaded", function () {
     // Get all existing events from the calendar
     for(var k in expandedOccurrences){
     	for(var i=0; i< expandedOccurrences[k].length; i++){
-      	console.log("hello");
-      	console.log(expandedOccurrences[k][i]);
       	if(newEvent.start < expandedOccurrences[k][i].end && 
         		newEvent.end > expandedOccurrences[k][i].start){
         	return true;
