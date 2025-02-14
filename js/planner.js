@@ -1,33 +1,29 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let calendarEl = document.getElementById("calendar");
+    let calendarEl = document.getElementById("edt-display");
 
     let calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: "timeGridWeek",
 		locale: "fr",
         allDaySlot: false,
-		slotMinTime: "09:00:00",
+		slotMinTime: "08:30:00",
 		slotMaxTime: "22:30:00",
-        slotDuration: "00:15:00",
-        headerToolbar: {
-            left: "",
-            center: "",
-            right: ""
-        },
+        slotDuration: "00:30:00",
+        headerToolbar: false,
         events: []
     });
 
     calendar.render();
 
     let selectedActivities = [];
+	
     let mealsSelected = false;
     const mealPrice = 50;
 
     const activities = {
-        "Yoga": { days: ["Monday"], start: "10:00", duration: 60, price: 15 },
-        "Coding Bootcamp": { days: ["Monday"], start: "11:30", duration: 120, price: 50 },
-        "Swimming": { days: ["Tuesday"], start: "14:00", duration: 60, price: 20 },
-        "Boxing": { days: ["Wednesday"], start: "16:00", duration: 60, price: 25 },
-        "Morning Stretch": { days: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"], start: "08:00", duration: 60, price: 40, recurring: true }
+        "diapason": { days: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], start: "14:00", duration: 120, price: 50},
+        "generason": { days: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], start: "11:00", duration: 90, price: 50},
+        "technique_solo": { days: ["Tuesday"], start: "16:00", duration: 60, price: 20 },
+        "technique_groupe": { days: ["Wednesday"], start: "15:00", duration: 60, price: 10 },
     };
 
     document.querySelectorAll(".activity-checkbox").forEach(checkbox => {
@@ -100,12 +96,12 @@ document.addEventListener("DOMContentLoaded", function () {
         selectedActivities.forEach(activityName => {
             let price = activities[activityName].price;
             let listItem = document.createElement("li");
-            listItem.innerText = `${activityName}: $${price}`;
+            listItem.innerText = `${activityName}: €${price}`;
             priceList.appendChild(listItem);
             totalPrice += price;
         });
 
-        totalPriceElement.innerText = `Total Price: $${totalPrice}`;
+        totalPriceElement.innerText = `Prix Total: €${totalPrice}`;
     }
 
     function addMinutes(time, mins) {
