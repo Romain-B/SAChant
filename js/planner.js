@@ -8,7 +8,7 @@ const wk = [0,1,2,3,4,5,6].map(num => "2025-07-2"+num); // dates of the week
 	sDate, eDate: start/end dates (defaults to start/end of week)
 	dow: days of the week on which the event occurs, within above dates (sun=0, mon=1, ...)
 	col: display color of the event in the calendar
-	price: price for the
+	price: price for the activity
 */			
 function mk_event_r(id, title, sTime, eTime, 
 					price,
@@ -23,7 +23,7 @@ function mk_event_r(id, title, sTime, eTime,
 			daysOfWeek: dow,
 			color: col,
 			extendedProps:{
-				price: (price/dow.length)
+				price: price
 			},
 			editable: false, // we don't want users moving stuff around
 	};             
@@ -60,8 +60,13 @@ const activity_list = {
 
 
 
+
+
+
+
 // Reactive elements
 document.addEventListener("DOMContentLoaded", function () {
+	let expandedOccurrences = {}; // External storage for event instances
 	
 	// get the calendar area of the webpage
     let calendarEl = document.getElementById("edt-display"); 
@@ -75,7 +80,25 @@ document.addEventListener("DOMContentLoaded", function () {
 		slotMaxTime: "22:30:00",	 // " "		 end time
         slotDuration: "00:30:00",	 // grid (display) unit
         headerToolbar: false,		 // we don't want users moving around in the calendar, everything is on the same week.
-        events: []					 // will be defined dynamically.
+        events: [],					 // will be defined dynamically.
+        eventsSet: function(events) { // To store all of the defined event's start/end dates, including recurring.
+            expandedOccurrences = {}; // reset occurrences storage
+            events.forEach(event => {
+                let eid = event.id;
+
+                // Ensure an array exists for this event's occurrences
+                if (!expandedOccurrences[eid]){ expandedOccurrences[eid] = []; }
+
+                // Store each occurrence externally 
+                expandedOccurrences[eid].push(
+				{
+					start: event.start.toISOString(),
+					end: event.end.toISOString()
+				 });
+            });
+
+            //console.log("All expanded occurrences:", expandedOccurrences);
+        }
     });
 
     calendar.render();	// show the calendar
@@ -113,44 +136,45 @@ document.addEventListener("DOMContentLoaded", function () {
         updateUI();
     });
 	
-	function hasOverlap(newEvent) {
+    function hasOverlap(newEvent) {
     // Get all existing events from the calendar
-    existingEvents = calendar.getEvents();
-    
-    // Check each existing event for overlap
-    return existingEvents.some(existingEvent => {
-        return newEvent.start < existingEvent.end && 
-               newEvent.end > existingEvent.start;
-    });
+    for(var k in expandedOccurrences){
+    	for(var i=0; i< expandedOccurrences[k].length; i++){
+      	console.log("hello");
+      	console.log(expandedOccurrences[k][i]);
+      	if(newEvent.start < expandedOccurrences[k][i].end && 
+        		newEvent.end > expandedOccurrences[k][i].start){
+        	return true;
+        }
+      }
+    }
+    return false;
 }
 
     function addActivity(activityName) {
-        const activity = activities[activityName];
+        const activity = activity_list[activityName];
         if (!activity) return false;
 
-        for (let day of activity.days) {
-            let startTime = activity.start;
-            let duration = activity.duration;
-            let endTime = addMinutes(startTime, duration);
+        if(!activity.extendedProps.recur){ // if it's not recurring
+          if (hasOverlap(activity_list[activityName])) {
+                  alert("❌ Activity conflict detected!");
+                  return false;
 
-            if (hasOverlap(activity_list[activityName])) {
-                alert("❌ Activity conflict detected!");
-                return false;
-            }
-
+          }
         }
-
+        calendar.addEvent(activity);
         selectedActivities.push(activityName);
         return true;
     }
 
     function removeActivity(activityName) {
         calendar.getEvents().forEach(event => {
-            if (event.title === activityName) {
+            if (event.id === activityName) {
                 event.remove();
             }
         });
-
+        
+		delete expandedOccurrences[activityName]; // clear from the event time slot list.
         selectedActivities = selectedActivities.filter(a => a !== activityName);
     }
 
@@ -165,14 +189,14 @@ document.addEventListener("DOMContentLoaded", function () {
         let totalPrice = mealsSelected ? mealPrice : 0;
 
         selectedActivities.forEach(activityName => {
-            let price = activities[activityName].price;
+            let price = activity_list[activityName].extendedProps.price;
             let listItem = document.createElement("li");
             listItem.innerText = `${activityName}: €${price}`;
             priceList.appendChild(listItem);
             totalPrice += price;
         });
 
-        totalPriceElement.innerText = `Prix Total: €${totalPrice}`;
+        totalPriceElement.innerText = `Prix Total: €${(totalPrice).toFixed(2)}`;
     }
 
     function addMinutes(time, mins) {
