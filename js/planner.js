@@ -1,18 +1,124 @@
 document.addEventListener("DOMContentLoaded", function () {
-    let calendarEl = document.getElementById("edt-display");
-
+	
+	// Setup variables and functions
+	const wk = [0,1,2,3,4,5,6].map(num => "2025-07-2"+num); // dates of the week
+	
+	/* Function to make a recurring event object from basic info:
+		id: event ID for handling ("g_"+id to catch all recurring events)
+		title: display text on the calendar
+		sTime, eTime: start/end times
+		sDate, eDate: start/end dates (defaults to start/end of week)
+		dow: days of the week on which the event occurs, within above dates (sun=0, mon=1, ...)
+		col: display color of the event in the calendar
+	*/			
+	function mk_event_r(id, title, sTime, eTime, 
+						sDate=wk[0], eDate=wk[6], 
+						dow=[0,1,2,3,4,5], col="royalblue"){
+      return {
+				id: id, title: title, 	  // id is for handling, title is for display
+				groupId: "g_".concat(id), // to handle all the sub-events
+				startTime: sTime, endTime: eTime,
+				startRecur: sDate, endRecur: eDate,
+				daysOfWeek: dow,
+				color: col,
+				editable: false,
+      }                
+	}
+	/* Function to make a simple event object from basic info:
+		id: event ID for handling 
+		title: display text on the calendar
+		sTime, eTime: start/end times
+		date: date of the event
+		col: display color of the event in the calendar		
+	*/	
+  function mk_event(id, title, sTime, eTime, date, 
+					col="royalblue"){
+      return {
+      			id: id, title: title,
+				start: date.concat('T', sTime), 
+				end: date.concat('T', eTime),
+				color: col,
+				editable: false,
+      }                
+	}
+	
+	const activity_list = {
+    	"diapason":{
+			id: "diapason",
+			groupId: "g_diapason",
+			title: "Choeur Diapa'Son",
+					daysOfWeek: [0,1,2,3,4,5],
+			startRecur: wk[0],
+			endRecur: wk[6],
+			startTime: "14:00",
+			endTime: "16:00",
+			editable: false,
+			color: 'royalblue'
+		},
+		"generason":{
+			id: "generason",
+			groupId: "g_generason",
+			title: "Choeur Généra'Son",
+					daysOfWeek: [0,1,2,3,4,5],
+			startRecur: wk[0],
+			endRecur: wk[6],
+			startTime: "11:30",
+			endTime: "13:00",
+			editable: false,
+			color: 'deeppink'
+		},
+		"enchantillages":{
+			id: "enchantillages",
+			groupId: "g_enchantillages",
+			title: "Choeur Enchantillages",
+					daysOfWeek: [0,1,2,3,4,5],
+			startRecur: wk[0],
+			endRecur: wk[6],
+			startTime: "14:00",
+			endTime: "16:00",
+			editable: false,
+			color: 'deeppink'
+		},
+		"technique_solo":{
+			id: "technique_solo",
+			title: "Progres'Son Individuel (Créneau 45min)",
+			details:"",
+			start: wk[2].concat('T', "14:00"),
+			end: wk[2].concat('T', "16:00"),
+			editable: false, 
+			color: "chartreuse4"
+		},
+		"technique_groupe":{
+			id: "technique_solo",
+			title: "Progres'Son Collectif (45min)",
+			details:"",
+			start: wk[2].concat('T', "14:00"),
+			end: wk[2].concat('T', "16:00"),
+			editable: false, 
+			color: "chartreuse3"
+		}
+      
+    };
+	
+	
+	
+	
+	// get the calendar area of the webpage
+    let calendarEl = document.getElementById("edt-display"); 
+	// create a FullCalendar element
     let calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: "timeGridWeek",
-		locale: "fr",
-        allDaySlot: false,
-		slotMinTime: "08:30:00",
-		slotMaxTime: "22:30:00",
-        slotDuration: "00:30:00",
-        headerToolbar: false,
-        events: []
+        initialView: "timeGridWeek", // week format
+		initialDate: wk[0],			 // start on the first day of SAC
+		locale: "fr",			     // we are Français, oui oui
+        allDaySlot: false,			 // schedule by hour (not list per day).
+		slotMinTime: "08:30:00",	 // schedule start time
+		slotMaxTime: "22:30:00",	 // " "		 end time
+        slotDuration: "00:30:00",	 // grid (display) unit
+        headerToolbar: false,		 // we don't want users moving around in the calendar, everything is on the same week.
+        events: []					 // will be defined dynamically.
     });
 
-    calendar.render();
+    calendar.render();	// renders the calendar
 
     let selectedActivities = [];
 	
