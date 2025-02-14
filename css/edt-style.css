@@ -1,0 +1,9 @@
+/* styling for the calendar display */
+
+.fc-day{
+    font-size: .8em;
+}
+
+.fc-timegrid{
+    font-size: .6em;
+}
