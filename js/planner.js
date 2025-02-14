@@ -23,7 +23,8 @@ function mk_event_r(id, title, sTime, eTime,
 			daysOfWeek: dow,
 			color: col,
 			extendedProps:{
-				price: price
+				price: price,
+				recur: true
 			},
 			editable: false, // we don't want users moving stuff around
 	};             
@@ -66,7 +67,9 @@ const activity_list = {
 
 // Reactive elements
 document.addEventListener("DOMContentLoaded", function () {
-	let expandedOccurrences = {}; // External storage for event instances
+	let selectedSlots = {}; // Storage array for selected activity start/end times (expanding recurring events)
+	let selectedActivities = [];  // Storage array for selected activity names
+
 	
 	// get the calendar area of the webpage
     let calendarEl = document.getElementById("edt-display"); 
@@ -75,57 +78,62 @@ document.addEventListener("DOMContentLoaded", function () {
         initialView: "timeGridWeek", // week format
 		initialDate: wk[0],			 // start on the first day of SAC
 		locale: "fr",			     // we are Français, oui oui
-        allDaySlot: false,			 // schedule by hour (not list per day).
-		slotMinTime: "08:30:00",	 // schedule start time
-		slotMaxTime: "22:30:00",	 // " "		 end time
+        allDaySlot: false,			 // schedule layout (not a list per day).
+		slotMinTime: "09:00:00",	 // start time in layout
+		slotMaxTime: "22:30:00",	 // end time "  "  "
         slotDuration: "00:30:00",	 // grid (display) unit
         headerToolbar: false,		 // we don't want users moving around in the calendar, everything is on the same week.
         events: [],					 // will be defined dynamically.
-		eventsSet: function(events) { // To store all of the defined event's start/end dates, including recurring.
-            expandedOccurrences = {}; // reset occurrences storage
+		eventsSet: function(events) { // To store all of the defined event's start/end dates, 
+									  // including recurring (which is not done, for some reason).
+            selectedSlots = {}; // reset occurrences storage
             events.forEach(event => {
                 let eid = event.id;
-                let es = event.start
-                let ee = event.end
+                let [es, ee] = [event.start, event.end]
                 
-                if(es.getHours()==0){
+                if(event.extendedProps.recur){ // if it's a recursive event, times are not defined
+					// fetch time values from the activities list defined above
                 	[h, m] = activity_list[eid].startTime.split(":").map(Number);
-									es.setHours(h, m, 0);
-                  
-									[h, m] = activity_list[eid].endTime.split(":").map(Number);
-									ee.setHours(h, m, 0); // Update date with the new time
-									}
+					es.setHours(h, m, 0); // update start date with the time
+					
+					[h, m] = activity_list[eid].endTime.split(":").map(Number);
+					ee.setHours(h, m, 0); // update end date with the time
+				}
 
                 // Ensure an array exists for this event's occurrences
-                if (!expandedOccurrences[eid]){ expandedOccurrences[eid] = []; }
+                if (!selectedSlots[eid]){ selectedSlots[eid] = []; }
 
                 // Store each occurrence externally 
-                expandedOccurrences[eid].push(
+                selectedSlots[eid].push(
 				{
-					start: new Date(es),
+					start: new Date(es), // define as new date to enforce format
 					end: new Date(ee)
 				 });
             });
-
-            //console.log("All expanded occurrences:", expandedOccurrences);
         }
     });
 
     calendar.render();	// show the calendar
-
-    let selectedActivities = [];
 	
+	//Meal stuff to rework ... (also add lodging stuff, in a similar way.)
     let mealsSelected = false;
     const mealPrice = 50;
+	document.getElementById("meal-checkbox").addEventListener("change", function () {
+        mealsSelected = this.checked;
+        updateUI();
+    });
+	//.....//
 
+	// Creates an event handler for checkboxes on the webpage with the tag ".activity-checkbox"
     document.querySelectorAll(".activity-checkbox").forEach(checkbox => {
         checkbox.addEventListener("change", function () {
+			// Upon change, then call functions to handle adding or removing the event to calendar.
             const activityName = this.value;
             if (this.checked) {
                 if (addActivity(activityName)) {
                     updateUI();
-                } else {
-                    this.checked = false;
+                } else { // if adding the activity fails (e.g. event overlap), then don't check.
+                    this.checked = false; 
                 }
             } else {
                 removeActivity(activityName);
@@ -134,19 +142,16 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    document.getElementById("meal-checkbox").addEventListener("change", function () {
-        mealsSelected = this.checked;
-        updateUI();
-    });
-	
+
     function hasOverlap(newEvent) {
 		// Check overlap of new event with loaded events in the calendar
+		
 		s2 = new Date(newEvent.start);
 		e2 = new Date(newEvent.end);
-		for(var k in expandedOccurrences){
-			for(var i=0; i< expandedOccurrences[k].length; i++){
-				e1 = expandedOccurrences[k][i].end;
-				s1 = expandedOccurrences[k][i].start;
+		for(var k in selectedSlots){
+			for(var i=0; i< selectedSlots[k].length; i++){
+				e1 = selectedSlots[k][i].end;
+				s1 = selectedSlots[k][i].start;
 				//console.log(s2+"\n"+e2);
 				//console.log(s2 < e1 && s1 < e2);
 				if(s2 < e1 && s1 < e2){
@@ -159,12 +164,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     function addActivity(activityName) {
+		// Adds an activity (e.g. upon selection)
+		
         const activity = activity_list[activityName];
         if (!activity) return false;
 
         if(!activity.extendedProps.recur){ // if it's not recurring
           if (hasOverlap(activity_list[activityName])) {
-                  alert("❌ Activity conflict detected!");
+                  alert("❌ Vous ne pouvez pas vous dédoubler et assister à deux ateliers en même temps !");
                   return false;
 
           }
@@ -173,23 +180,27 @@ document.addEventListener("DOMContentLoaded", function () {
         selectedActivities.push(activityName);
         return true;
     }
-
+	
     function removeActivity(activityName) {
+		// Removes an activity (e.g. upon deselection)
         calendar.getEvents().forEach(event => {
             if (event.id === activityName) {
                 event.remove();
             }
         });
         
-		delete expandedOccurrences[activityName]; // clear from the event time slot list.
+		// clear from the event time slot list, and the list of selected activities.
+		delete selectedSlots[activityName]; 
         selectedActivities = selectedActivities.filter(a => a !== activityName);
     }
 
     function updateUI() {
+		// Updates the page when an action is performed
         updatePriceDetails();
     }
 
     function updatePriceDetails() {
+
         let priceList = document.getElementById("price-details");
         let totalPriceElement = document.getElementById("total-price");
         priceList.innerHTML = "";
