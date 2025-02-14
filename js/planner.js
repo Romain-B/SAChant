@@ -81,10 +81,20 @@ document.addEventListener("DOMContentLoaded", function () {
         slotDuration: "00:30:00",	 // grid (display) unit
         headerToolbar: false,		 // we don't want users moving around in the calendar, everything is on the same week.
         events: [],					 // will be defined dynamically.
-        eventsSet: function(events) { // To store all of the defined event's start/end dates, including recurring.
+		eventsSet: function(events) { // To store all of the defined event's start/end dates, including recurring.
             expandedOccurrences = {}; // reset occurrences storage
             events.forEach(event => {
                 let eid = event.id;
+                let es = event.start
+                let ee = event.end
+                
+                if(es.getHours()==0){
+                	[h, m] = activity_list[eid].startTime.split(":").map(Number);
+									es.setHours(h, m, 0);
+                  
+									[h, m] = activity_list[eid].endTime.split(":").map(Number);
+									ee.setHours(h, m, 0); // Update date with the new time
+									}
 
                 // Ensure an array exists for this event's occurrences
                 if (!expandedOccurrences[eid]){ expandedOccurrences[eid] = []; }
@@ -92,8 +102,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Store each occurrence externally 
                 expandedOccurrences[eid].push(
 				{
-					start: event.start.toISOString(),
-					end: event.end.toISOString()
+					start: new Date(es),
+					end: new Date(ee)
 				 });
             });
 
@@ -107,13 +117,6 @@ document.addEventListener("DOMContentLoaded", function () {
 	
     let mealsSelected = false;
     const mealPrice = 50;
-
-    const activities = {
-        "diapason": { days: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], start: "14:00", duration: 120, price: 50},
-        "generason": { days: ["Sunday","Monday", "Tuesday", "Wednesday", "Thursday", "Friday"], start: "11:00", duration: 90, price: 50},
-        "technique_solo": { days: ["Tuesday"], start: "16:00", duration: 60, price: 20 },
-        "technique_groupe": { days: ["Wednesday"], start: "15:00", duration: 60, price: 10 },
-    };
 
     document.querySelectorAll(".activity-checkbox").forEach(checkbox => {
         checkbox.addEventListener("change", function () {
@@ -137,17 +140,23 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 	
     function hasOverlap(newEvent) {
-    // Get all existing events from the calendar
-    for(var k in expandedOccurrences){
-    	for(var i=0; i< expandedOccurrences[k].length; i++){
-      	if(newEvent.start < expandedOccurrences[k][i].end && 
-        		newEvent.end > expandedOccurrences[k][i].start){
-        	return true;
-        }
-      }
-    }
-    return false;
-}
+		// Check overlap of new event with loaded events in the calendar
+		s2 = new Date(newEvent.start);
+		e2 = new Date(newEvent.end);
+		for(var k in expandedOccurrences){
+			for(var i=0; i< expandedOccurrences[k].length; i++){
+				e1 = expandedOccurrences[k][i].end;
+				s1 = expandedOccurrences[k][i].start;
+				//console.log(s2+"\n"+e2);
+				//console.log(s2 < e1 && s1 < e2);
+				if(s2 < e1 && s1 < e2){
+					return true; // there is overlap
+				}
+			}
+		}
+		return false;
+	}
+
 
     function addActivity(activityName) {
         const activity = activity_list[activityName];
