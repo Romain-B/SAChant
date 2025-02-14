@@ -69,8 +69,8 @@ function edt_shortcode() {
 
                 <div class="activity-category">
                     <h4>Cours de technique vocale</h4>
-                    <label><input type="checkbox" class="activity-checkbox" value="technique_solo">Cours de technique vocale solo</label><br>
-                    <label><input type="checkbox" class="activity-checkbox" value="technique_groupe">Cours de technique vocale en groupe</label><br>
+                    <label><input type="checkbox" class="activity-checkbox" value="prog_solo">Cours de technique vocale solo</label><br>
+                    <label><input type="checkbox" class="activity-checkbox" value="prog_coll">Cours de technique vocale en groupe</label><br>
                 </div>
 
                 <!-- Meal Plan -->
