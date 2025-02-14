@@ -63,7 +63,7 @@ function edt_shortcode() {
                 <div class="activity-category">
                     <h4>Stages à la semaine</h4>
                     <label><input type="checkbox" class="activity-checkbox" value="diapason">Diapa'Son (50€ (prix test))</label><br>
-                    <label><input type="checkbox" class="activity-checkbox" value="generason">Généra'Son (20€)</label><br>
+                    <label><input type="checkbox" class="activity-checkbox" value="generason">Généra'Son (45€)</label><br>
 					<label><input type="checkbox" class="activity-checkbox" value="enchantillages">Enchantillages (40€)</label><br>
                 </div>
 
