@@ -57,7 +57,7 @@ const activity_list = {
 	"enchantillages": mk_event_r("enchantillages", "Choeur Enchantillages", "14:00", "16:00", price=40, col="darkturquoise"),
 	"prog_solo": mk_event("prog_solo", "Progres'Son Individuel (Créneau 45min)", "10:00", "11:30", date=wk[1], price=20, col='turquoise'),
 	"prog_coll": mk_event("prog_coll", "Progres'Son Collectif", "11:40", "12:30", date=wk[1], price=10, col='green'),
-	"bilan": mk_event("bilan", "Bilans et rangement", "09:30", "12:30", date=wk[5], price=0, col='lightgrey')
+	"bilan": mk_event("bilan", "Bilans et rangement", "09:30", "12:30", date=wk[6], price=0, col='lightgrey')
 };
 
 
@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function updatePriceDetails() {
-
+		// Keeps the price list up to date
         let priceList = document.getElementById("price-details");
         let totalPriceElement = document.getElementById("total-price");
         priceList.innerHTML = "";
@@ -222,10 +222,61 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     function addMinutes(time, mins) {
+		// Computes total of minutes
         let [hours, minutes] = time.split(":").map(Number);
         minutes += mins;
         hours += Math.floor(minutes / 60);
         minutes %= 60;
         return `${hours}:${minutes < 10 ? "0" + minutes : minutes}`;
-    }
+    }	
+});
+
+
+
+// For PDF saving
+const savePdfBtn = document.getElementById("save-pdf"); // get the save button
+savePdfBtn.addEventListener("click", function () {		// attach an event listener to it
+	const { jsPDF } = window.jspdf;
+	
+	// Fetch the calendar & price detail sections to render in the pdf
+	const edtEl = document.getElementById("edt-display"); 
+	const priceEl = document.getElementById("price-section");
+	let pdf = new jsPDF('p', 'mm', 'a4');
+
+
+	// Page dimensions
+	let pdfWidth = pdf.internal.pageSize.getWidth() - 20; // Leave margins
+	let pdfHeight = pdf.internal.pageSize.getHeight() - 20; // Leave margins
+
+	pdf.setFontSize(16);
+	pdf.text("Résumé de la simulation", 10, 15);
+
+	// Render the schedule
+	pdf.html(edtEl, {
+		x: 20,
+		y: 20,
+		width: pdfWidth * 0.6, // Fit width to PDF
+		windowWidth: edtEl.scrollWidth, // Scale content
+		autoPaging: true, // Ensures multiple pages if needed
+		callback: function (pdf) {
+			let newY = pdf.internal.pageSize.height - 150; // Position for price section
+
+			// Check if content exceeded a page and move accordingly
+			if (pdf.internal.getNumberOfPages() > 1) {
+				pdf.addPage();
+				newY = 20; // Reset for new page
+			}
+
+			// Render price breakdown
+			pdf.html(priceEl, {
+				x: 20,
+				y: newY,
+				width: pdfWidth,
+				windowWidth: priceEl.scrollWidth,
+				callback: function (pdf) {
+					pdf.save("simulation_allezchant.pdf");
+				}
+			});
+		}
+	});
 });
