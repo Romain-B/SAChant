@@ -53,7 +53,8 @@ function edt_assets() {
         'edt-css',
         plugin_dir_url(__FILE__) . 'css/edt-style.css',
         array(),
-        filemtime(plugin_dir_url(__FILE__) . 'css/edt-style.css')
+        filemtime(plugin_dir_url(__FILE__) . 'css/edt-style.css'),
+		true
     );
 }
 add_action('wp_enqueue_scripts', 'edt_assets'); // tells WP to load the function with the scripts on a page

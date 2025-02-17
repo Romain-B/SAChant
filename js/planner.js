@@ -201,7 +201,7 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         }
         calendar.addEvent(activity);
-		if(activity.extendedProps.recur && ){
+		if(activity.extendedProps.recur){
 			calendar.addEvent(activity_list["bilan"]);
 		}
         selectedActivities.push(activityName);
