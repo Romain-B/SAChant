@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: SAChant
- * Description: Allows users to plan and calculate activities dynamically.
- * Version:     0.1
+ * Description: Plugin pour plannifier sa semaine Allez'Chant.
+ * Version:     0.2
  * Author:      Romain B, Lucas, Bathilde
  * License:     GPL2
  */
@@ -11,7 +11,7 @@ if (!defined('ABSPATH')) {
     exit; // Prevent direct access
 }
 
-// Enqueue FullCalendar.js and custom script
+// Enqueue dependencies and custom script
 function edt_assets() {
 	// what this does (per asset):
 	// 	WP function to load scripts
@@ -23,25 +23,27 @@ function edt_assets() {
     wp_enqueue_script(
         'fullcalendar-js',
         'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js',
-        array(),
-        null,
-        true
+        array(), null, true
     );
 	
 	// jsPDF (for generating the pdf)
     wp_enqueue_script(
         'jspdf-js',
         'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
-        array(),
-        null,
-        true
+        array(), null, true
+    );
+	// html2canvas (for generating the pdf)
+    wp_enqueue_script(
+        'html2canvas-js',
+        'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
+        array(), null, true
     );
 	
-    // Custom JS for handling the schedule
+    // Our custom JS script to handle the schedule
     wp_enqueue_script(
         'edt-js',
         plugin_dir_url(__FILE__) . 'js/planner.js',
-        array('jquery', 'fullcalendar-js', 'jspdf-js'), // call the dependencies
+        array('jquery', 'fullcalendar-js', 'jspdf-js', 'html2canvas-js'), // call the dependencies
         filemtime(plugin_dir_url(__FILE__) . 'js/planner.js'),
         true
     );
@@ -54,10 +56,12 @@ function edt_assets() {
         filemtime(plugin_dir_url(__FILE__) . 'css/edt-style.css')
     );
 }
-
 add_action('wp_enqueue_scripts', 'edt_assets'); // tells WP to load the function with the scripts on a page
 
 function edt_shortcode() {
+/* Function that defines the form & interactive area, 
+   as a shortcode to integrate within a WP page using '[edt_shortcode]'
+*/
     ob_start();
     ?>
     
