@@ -85,6 +85,44 @@ function edt_shortcode() {
                     <label><input type="checkbox" class="activity-checkbox" value="prog_solo">Cours de technique vocale solo</label><br>
                     <label><input type="checkbox" class="activity-checkbox" value="prog_coll">Cours de technique vocale en groupe</label><br>
                 </div>
+				<div class="c-dropdown">
+                   Progres'Son Individuel, Créneau de 45min (50€)
+                    <div class="c-dropdown-content">
+					<table class="c-table">
+						<thead>
+							<tr>
+								<th style="width:20%;"></th>
+								<th>Dim.</th>
+								<th>Lun.</th>
+								<th>Mar.</th>
+								<th>Mer.</th>
+								<th>Jeu.</th>
+								<th>Ven.</th>
+							</tr>
+						<thead>
+						<tbody>
+							<tr><td>Matin (10:00-11:30)</td>
+								<td></td>
+								<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_luam"></label></td>
+								<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_maam"></label></td>
+								<td></td>
+								<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_jeam"></label></td>
+								<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_veam"></label></td>
+							</tr>
+							<tr><td>Après-midi (14:00-16:30)</td>
+								<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_dipm"></label></td>
+								<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_lupm"></label></td>
+								<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_mapm"></label></td>
+								<td></td>
+								<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_jepm"></label></td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+                    </div>
+                  </div><br>
+                    <label><input type="checkbox" class="activity-checkbox" value="prog_coll">Cours de technique vocale en groupe</label><br>
+                </div>
 
                 <!-- Meal Plan -->
                 <h3>Repas pour la semaine:</h3>

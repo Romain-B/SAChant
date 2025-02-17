@@ -7,3 +7,32 @@
 .fc-timegrid{
     font-size: .6em;
 }
+
+/*Styling for the form
+	c-dropdown is a custom class which displays a box with 
+	checkboxes (c-dropdown-content) upon mouse hover for sub-activities
+*/
+
+.c-dropdown {
+    position: relative;
+    display: inline-block;
+}
+.c-dropdown-content {
+	display: none;
+	position: absolute;
+	background-color: white;
+	border: 1px solid #ddd;
+	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+	padding: 10px;
+	min-width: 200px;
+}
+.c-dropdown:hover .c-dropdown-content {
+	display: block;
+}
+
+.c-table {
+	text-align: center;
+}
+.c-table td, th {
+	padding: 3px 1px;
+}
