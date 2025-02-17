@@ -19,10 +19,19 @@ function edt_assets() {
 	//  Path to the script in plugin
 	//  Load jquery as dependency if necessary
     
-    // FullCalendar JS
+    // FullCalendar JS (for the interactive calendar)
     wp_enqueue_script(
         'fullcalendar-js',
         'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js',
+        array(),
+        null,
+        true
+    );
+	
+	// jsPDF (for generating the pdf)
+    wp_enqueue_script(
+        'jspdf-js',
+        'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
         array(),
         null,
         true
@@ -32,7 +41,7 @@ function edt_assets() {
     wp_enqueue_script(
         'edt-js',
         plugin_dir_url(__FILE__) . 'js/planner.js',
-        array('jquery', 'fullcalendar-js'),
+        array('jquery', 'fullcalendar-js', 'jspdf-js'), // call the dependencies
         filemtime(plugin_dir_url(__FILE__) . 'js/planner.js'),
         true
     );
@@ -83,13 +92,15 @@ function edt_shortcode() {
         <p id="warning-message" style="color: red;"></p>
 
         <!-- FullCalendar Schedule Display -->
-        <h3>Your Weekly Schedule:</h3>
+        <h3>Ton emploi du temps:</h3>
         <div id="edt-display"></div>
 
         <!-- Price Details -->
-        <h3>Price Breakdown:</h3>
-        <ul id="price-details"></ul>
-        <h4 id="total-price">Prix Total: €0</h4>
+		<div id="price-section">
+			<h4>Détail:</h3>
+			<ul id="price-details"></ul>
+			<h4 id="total-price">Total: €0</h4>
+		</div>
     </div>
 
     <?php
