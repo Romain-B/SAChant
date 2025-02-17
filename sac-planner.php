@@ -66,7 +66,7 @@ function edt_shortcode() {
 
         <!-- Activity Selection -->
         <div id="activity-selection">
-            <h3>Sélection des activités:</h3>
+            <h3>Sélection des activités</h3>
 			
             <form id="activity-form">
                 <div class="activity-category">
@@ -92,15 +92,18 @@ function edt_shortcode() {
         <p id="warning-message" style="color: red;"></p>
 
         <!-- FullCalendar Schedule Display -->
-        <h3>Ton emploi du temps:</h3>
+        <h3>Ton emploi du temps</h3>
         <div id="edt-display"></div>
 
         <!-- Price Details -->
 		<div id="price-section">
-			<h4>Détail:</h3>
+			<h4>Détail:</h4>
 			<ul id="price-details"></ul>
 			<h4 id="total-price">Total: €0</h4>
 		</div>
+		<br>
+		<button id="save-pdf">Enregistrer la simulation (PDF)</button>
+
     </div>
 
     <?php
