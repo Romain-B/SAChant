@@ -56,7 +56,8 @@ const activity_list = {
 	"generason": mk_event_r("generason", "Choeur Généra'Son", "11:30", "13:00", price=45, col='firebrick'),
 	"enchantillages": mk_event_r("enchantillages", "Choeur Enchantillages", "14:00", "16:00", price=40, col="darkturquoise"),
 	"prog_solo": mk_event("prog_solo", "Progres'Son Individuel (Créneau 45min)", "10:00", "11:30", date=wk[1], price=20, col='turquoise'),
-	"prog_coll": mk_event("prog_coll", "Progres'Son Collectif", "11:40", "12:30", date=wk[1], price=10, col='green')
+	"prog_coll": mk_event("prog_coll", "Progres'Son Collectif", "11:40", "12:30", date=wk[1], price=10, col='green'),
+	"bilan": mk_event("bilan", "Bilans et rangement", "09:30", "12:30", date=wk[5], price=0, col='lightgrey')
 };
 
 
@@ -80,8 +81,9 @@ document.addEventListener("DOMContentLoaded", function () {
 		locale: "fr",			     // we are Français, oui oui
         allDaySlot: false,			 // schedule layout (not a list per day).
 		slotMinTime: "09:00:00",	 // start time in layout
-		slotMaxTime: "22:30:00",	 // end time "  "  "
+		slotMaxTime: "20:00:00",	 // end time "  "  "
         slotDuration: "00:30:00",	 // grid (display) unit
+		contentHeight: "auto",		 // forces the full caldendar height to display
         headerToolbar: false,		 // we don't want users moving around in the calendar, everything is on the same week.
         events: [],					 // will be defined dynamically.
 		eventsSet: function(events) { // To store all of the defined event's start/end dates, 
@@ -173,10 +175,12 @@ document.addEventListener("DOMContentLoaded", function () {
           if (hasOverlap(activity_list[activityName])) {
                   alert("❌ Vous ne pouvez pas vous dédoubler et assister à deux ateliers en même temps !");
                   return false;
-
           }
         }
         calendar.addEvent(activity);
+		if(activity.extendedProps.recur){
+			calendar.addEvent(activity_list["bilan"]);
+		}
         selectedActivities.push(activityName);
         return true;
     }
