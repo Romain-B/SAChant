@@ -75,53 +75,89 @@ function edt_shortcode() {
             <form id="activity-form">
                 <div class="activity-category">
                     <h4>Stages à la semaine</h4>
-                    <label><input type="checkbox" class="activity-checkbox" value="diapason">Diapa'Son (50€ (prix test))</label><br>
-                    <label><input type="checkbox" class="activity-checkbox" value="generason">Généra'Son (45€)</label><br>
-					<label><input type="checkbox" class="activity-checkbox" value="enchantillages">Enchantillages (40€)</label><br>
+                    <label><input type="checkbox" class="activity-checkbox" value="diapason">Diapa'Son (180€)</label><br>
+                    <label><input type="checkbox" class="activity-checkbox" value="generason">Généra'Son (60€)</label><br>
+					<label><input type="checkbox" class="activity-checkbox" value="enchantillages">Enchantillages (80€)</label><br>
                 </div>
 
                 <div class="activity-category">
-                    <h4>Cours de technique vocale</h4>
-                    <label><input type="checkbox" class="activity-checkbox" value="prog_solo">Cours de technique vocale solo</label><br>
-                    <label><input type="checkbox" class="activity-checkbox" value="prog_coll">Cours de technique vocale en groupe</label><br>
-                </div>
-				<div class="c-dropdown">
-                   Progres'Son Individuel, Créneau de 45min (50€)
-                    <div class="c-dropdown-content">
-					<table class="c-table">
-						<thead>
-							<tr>
-								<th style="width:20%;"></th>
-								<th>Dim.</th>
-								<th>Lun.</th>
-								<th>Mar.</th>
-								<th>Mer.</th>
-								<th>Jeu.</th>
-								<th>Ven.</th>
-							</tr>
-						<thead>
-						<tbody>
-							<tr><td>Matin (10:00-11:30)</td>
-								<td></td>
-								<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_luam"></label></td>
-								<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_maam"></label></td>
-								<td></td>
-								<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_jeam"></label></td>
-								<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_veam"></label></td>
-							</tr>
-							<tr><td>Après-midi (14:00-16:30)</td>
-								<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_dipm"></label></td>
-								<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_lupm"></label></td>
-								<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_mapm"></label></td>
-								<td></td>
-								<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_jepm"></label></td>
-								<td></td>
-							</tr>
-						</tbody>
-					</table>
-                    </div>
-                  </div><br>
-                    <label><input type="checkbox" class="activity-checkbox" value="prog_coll">Cours de technique vocale en groupe</label><br>
+					<h3>Cours de technique vocale</h3>
+                    
+					<div class="c-dropdown">
+						Progres'Son Individuel - Créneau de 45min (50€)
+						
+						<div class="c-dropdown-content">
+						<table class="c-table">
+							<thead>
+								<tr>
+									<th style="width:20%;"></th>
+									<th>Dim.</th>
+									<th>Lun.</th>
+									<th>Mar.</th>
+									<th>Mer.</th>
+									<th>Jeu.</th>
+									<th>Ven.</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr><td>Matin (10:00-11:30)</td>
+									<td></td>
+									<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_luam"></label></td>
+									<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_maam"></label></td>
+									<td></td>
+									<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_jeam"></label></td>
+									<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_veam"></label></td>
+								</tr>
+								<tr><td>Après-midi (14:00-16:30)</td>
+									<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_dipm"></label></td>
+									<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_lupm"></label></td>
+									<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_mapm"></label></td>
+									<td></td>
+									<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_jepm"></label></td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+						</div>
+					  </div>
+					  
+					  <div class="c-dropdown">
+						Progres'Son Collectif (25€)
+						
+						<div class="c-dropdown-content">
+						<table class="c-table">
+							<thead>
+								<tr>
+									<th style="width:20%;"></th>
+									<th>Dim.</th>
+									<th>Lun.</th>
+									<th>Mar.</th>
+									<th>Mer.</th>
+									<th>Jeu.</th>
+									<th>Ven.</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr><td>Matin (11:40-12:30)</td>
+									<td></td>
+									<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_luam"></label></td>
+									<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_maam"></label></td>
+									<td></td>
+									<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_jeam"></label></td>
+									<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_veam"></label></td>
+								</tr>
+								<tr><td>Après-midi (16:30-17:15)</td>
+									<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_dipm"></label></td>
+									<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_lupm"></label></td>
+									<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_mapm"></label></td>
+									<td></td>
+									<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_jepm"></label></td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+						</div>
+					  </div><br>
                 </div>
 
                 <!-- Meal Plan -->

@@ -16,15 +16,22 @@
 .c-dropdown {
     position: relative;
     display: inline-block;
+	
+	border-style: solid;
+    border-width: 1px;
+    padding: 3px 7px;
+    border-radius: 5px ;
 }
 .c-dropdown-content {
 	display: none;
 	position: absolute;
 	background-color: white;
 	border: 1px solid #ddd;
-	box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+	border-radius: 5px;
+	box-shadow: 3px 4px 8px rgba(0, 0, 0, 0.2);
 	padding: 10px;
 	min-width: 200px;
+	z-index:3; /* makes sure it's above other stuff */
 }
 .c-dropdown:hover .c-dropdown-content {
 	display: block;
@@ -34,5 +41,5 @@
 	text-align: center;
 }
 .c-table td, th {
-	padding: 3px 1px;
+	padding: 1px 5px;
 }
