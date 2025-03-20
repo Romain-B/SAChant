@@ -20,7 +20,7 @@ function mk_event_r(id, title, sTime, eTime,
 	// compute duration in minutes
 	var durMinutes = {}; 
 	for(var d of dow){
-		durMinutes[wk[d]] = ( (new Date(date+' '+sTime)) - (new Date(date+' '+eTime)) )/1000/60 ;
+		durMinutes[wk[d]] = ( (new Date(wk[d]+' '+sTime)) - (new Date(wk[d]+' '+eTime)) )/1000/60 ;
 	}
 	
 	
@@ -109,11 +109,11 @@ const activity_list = {
 };
 
 const other_costs = {
-	repas_midi: 49;
-	repas_total: 107;
-	logement_camping: 30;
-	logement_habitant: 30;
-	logement_chalet: 120;
+	repas_midi: 49,
+	repas_total: 107,
+	logement_camping: 30,
+	logement_habitant: 30,
+	logement_chalet: 120
 };
 
 
