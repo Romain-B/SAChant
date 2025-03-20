@@ -109,11 +109,11 @@ const activity_list = {
 };
 
 const other_costs = {
-	repas_midi: 49,
-	repas_total: 107,
-	logement_camping: 30,
-	logement_habitant: 30,
-	logement_chalet: 120
+	repas_midi: {title:"Forfait repas à la semaine (midi)", price:49},
+	repas_total: {title:"Forfait repas à la semaine (complet)", price:107},
+	logement_camping: {title:"Logement camping à la semaine ", price:30},
+	logement_habitant: {title:"Logement chez l'habitant à la semaine ", price:30},
+	logement_chalet: {title:"Logement location de chalet", price:120}
 };
 
 
@@ -125,8 +125,10 @@ const other_costs = {
 document.addEventListener("DOMContentLoaded", function () {
 	let selectedSlots = {}; // Storage array for selected activity start/end times (expanding recurring events)
 	let selectedActivities = [];  // Storage array for selected activity names
-	let selectedOtherCosts = [];
-	
+	let selectedOtherCosts = {    // Storage object for selected extra costs
+		logement: 'none', 
+		repas: 'none'
+	};  	
 	let timePerDay = {}; // create array keeping track of time sung per day
 	for (var k of wk){
 		timePerDay[k] = 0; // set all days to 0
@@ -183,16 +185,16 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     calendar.render();	// show the calendar
-	
-	//Meal stuff to rework ... (also add lodging stuff, in a similar way.)
-    let mealsSelected = false;
-    const mealPrice = 50;
-	document.getElementById("meal-checkbox").addEventListener("change", function () {
-        mealsSelected = this.checked;
-        updateUI();
-    });
-	//.....//
 
+		//Other costs ... (meals, lodging)
+	  document.querySelectorAll('.other-radio').forEach(radio =>{
+			radio.addEventListener("change", function() {
+			selectedOtherCosts[this.name] = this.value;
+			updateUI();
+		  });
+	  });
+  
+  
 	// Creates an event handler for checkboxes on the webpage with the tag ".activity-checkbox"
     document.querySelectorAll(".activity-checkbox").forEach(checkbox => {
         checkbox.addEventListener("change", function () {
@@ -270,8 +272,9 @@ document.addEventListener("DOMContentLoaded", function () {
         let priceList = document.getElementById("price-details");
         let totalPriceElement = document.getElementById("total-price");
         priceList.innerHTML = "";
-        let totalPrice = mealsSelected ? mealPrice : 0;
-
+        let totalPrice = 0;
+		
+		// activities
         selectedActivities.forEach(activityName => {
             let price = activity_list[activityName].extendedProps.price;
             let listItem = document.createElement("li");
@@ -279,7 +282,18 @@ document.addEventListener("DOMContentLoaded", function () {
             priceList.appendChild(listItem);
             totalPrice += price;
         });
-
+		
+		// other costs
+		for(var costName of Object.values(selectedOtherCosts)) {
+    		if(costName != "none"){
+				let price = other_costs[costName].price;
+				let listItem = document.createElement("li");
+				listItem.innerText = `${other_costs[costName].title}: €${price}`;
+				priceList.appendChild(listItem);
+				totalPrice += price;
+            }
+        }
+		
         totalPriceElement.innerText = `Prix Total: €${(totalPrice).toFixed(2)}`;
     }
 	
