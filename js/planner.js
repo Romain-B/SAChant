@@ -9,12 +9,21 @@ const wk = [0,1,2,3,4,5,6].map(num => "2025-07-2"+num); // dates of the week
 	dow: days of the week on which the event occurs, within above dates (sun=0, mon=1, ...)
 	col: display color of the event in the calendar
 	price: price for the activity
+	song: if the event is singing (to compute max song/day)
 */			
 function mk_event_r(id, title, sTime, eTime, 
 					price,
 					col="royalblue",
 					sDate=wk[0], eDate=wk[6], 
-					dow=[0,1,2,3,4,5]){
+					dow=[0,1,2,3,4,5],
+					song=true){
+	// compute duration in minutes
+	var durMinutes = {}; 
+	for(var d of dow){
+		durMinutes[wk[d]] = ( (new Date(date+' '+sTime)) - (new Date(date+' '+eTime)) )/1000/60 ;
+	}
+	
+	
 	return {
 			id: id, title: title, 	  
 			groupId: "g_".concat(id), 
@@ -23,8 +32,10 @@ function mk_event_r(id, title, sTime, eTime,
 			daysOfWeek: dow,
 			color: col,
 			extendedProps:{
+				recur: true,
 				price: price,
-				recur: true
+				duration: durMinutes,
+				song: song
 			},
 			editable: false, // we don't want users moving stuff around
 	};             
@@ -34,17 +45,25 @@ function mk_event_r(id, title, sTime, eTime,
 	title: display text on the calendar
 	sTime, eTime: start/end times
 	date: date of the event
-	col: display color of the event in the calendar		
+	col: display color of the event in the calendar
+	song: if the event is singing (to compute max song/day)	
 */	
 function mk_event(id, title, sTime, eTime, date, price,
-				  col="royalblue"){
+				  col="royalblue", song=true){
+	
+	// compute duration in minutes
+	var durMinutes = {}; 
+	durMinutes[date] = ( (new Date(date+' '+sTime)) - (new Date(date+' '+eTime)) )/1000/60 ;
+	
 	return {
 			id: id, title: title,
 			start: date.concat('T', sTime), 
 			end: date.concat('T', eTime),
 			color: col,
 			extendedProps:{
-				price: price
+				price: price,
+				duration: durMinutes,
+				song: song
 			},
 			editable: false,
 	};               
@@ -80,11 +99,22 @@ const activity_list = {
 	"prog_coll_veam": mk_event("prog_coll_veam", "Progres'Son Collectif", "11:40", "12:25", date=wk[5], price=25, col='green'),
 
 	// Activités communes/obligatoires	
-	"bilan": mk_event("bilan", "Bilans et rangement", "09:30", "12:30", date=wk[6], price=0, col='lightgrey'),
-	"concert": mk_event("concert", "Concert", "18:00", "19:00", date=wk[6], price=0, col='lightgrey'),
-	"reunion": mk_event("reunion", "Réunion d'informations", "09:45", "10:15", date=wk[6], price=0, col='lightgrey')
+	"bilan": mk_event("bilan", "Bilans et rangement", "09:30", "12:30", date=wk[6], price=0, col='lightgrey', song=false),
+	"concert": mk_event("concert", "Concert", "18:00", "19:00", date=wk[6], price=0, col='lightgrey', song=false),
+	"reunion": mk_event("reunion", "Réunion d'informations", "09:45", "10:15", date=wk[6], price=0, col='lightgrey', song=false),
+	
+	// Autres activités
+	"bal_folk": mk_event("bal_folk", "Bal folk et scène ouverte", "20:00", "22:00", date=wk[2], price=0, col='lemonchiffon', song=false),
+	"soiree_talents": mk_event("soiree_talents", "Soirée talents", "20:00", "22:00", date=wk[3], price=0, col='lemonchiffon', song=false)
 };
 
+const other_costs = {
+	repas_midi: 49;
+	repas_total: 107;
+	logement_camping: 30;
+	logement_habitant: 30;
+	logement_chalet: 120;
+};
 
 
 
@@ -95,7 +125,13 @@ const activity_list = {
 document.addEventListener("DOMContentLoaded", function () {
 	let selectedSlots = {}; // Storage array for selected activity start/end times (expanding recurring events)
 	let selectedActivities = [];  // Storage array for selected activity names
-
+	let selectedOtherCosts = [];
+	
+	let timePerDay = {}; // create array keeping track of time sung per day
+	for (var k of wk){
+		timePerDay[k] = 0; // set all days to 0
+	}
+	
 	
 	// get the calendar area of the webpage
     let calendarEl = document.getElementById("edt-display"); 
@@ -106,11 +142,17 @@ document.addEventListener("DOMContentLoaded", function () {
 		locale: "fr",			     // we are Français, oui oui
         allDaySlot: false,			 // schedule layout (not a list per day).
 		slotMinTime: "09:00:00",	 // start time in layout
-		slotMaxTime: "20:00:00",	 // end time "  "  "
+		slotMaxTime: "22:00:00",	 // end time "  "  "
         slotDuration: "00:30:00",	 // grid (display) unit
 		contentHeight: "auto",		 // forces the full caldendar height to display
         headerToolbar: false,		 // we don't want users moving around in the calendar, everything is on the same week.
-        events: [],					 // will be defined dynamically.
+        events: [
+			activity_list["bilan"],
+			activity_list["concert"],
+			activity_list["reunion"],
+			activity_list["bal_folk"],
+			activity_list["soiree_talents"]
+			],					 // will be defined dynamically.
 		eventsSet: function(events) { // To store all of the defined event's start/end dates, 
 									  // including recurring (which is not done, for some reason).
             selectedSlots = {}; // reset occurrences storage
@@ -201,9 +243,6 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         }
         calendar.addEvent(activity);
-		if(activity.extendedProps.recur){
-			calendar.addEvent(activity_list["bilan"]);
-		}
         selectedActivities.push(activityName);
         return true;
     }
@@ -243,6 +282,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         totalPriceElement.innerText = `Prix Total: €${(totalPrice).toFixed(2)}`;
     }
+	
+	function updateTotalSungTime() {
+		
+	}
 
     function addMinutes(time, mins) {
 		// Computes total of minutes
