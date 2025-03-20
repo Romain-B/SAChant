@@ -91,7 +91,7 @@ function edt_shortcode() {
 						<table class="c-table">
 							<thead>
 								<tr>
-									<th style="width:20%;"></th>
+									<th style="width:25%;"></th>
 									<th>Dim.</th>
 									<th>Lun.</th>
 									<th>Mar.</th>
@@ -129,7 +129,7 @@ function edt_shortcode() {
 						<table class="c-table">
 							<thead>
 								<tr>
-									<th style="width:20%;"></th>
+									<th style="width:25%;"></th>
 									<th>Dim.</th>
 									<th>Lun.</th>
 									<th>Mar.</th>
