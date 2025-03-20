@@ -8,6 +8,14 @@
     font-size: .6em;
 }
 
+/*These are required to fix calendar display broken by the WP theme...*/
+table {
+	margin: 0 0;
+}
+th, td { 
+	line-height: none;
+}
+
 /*Styling for the form
 	c-dropdown is a custom class which displays a box with 
 	checkboxes (c-dropdown-content) upon mouse hover for sub-activities
@@ -39,7 +47,10 @@
 
 .c-table {
 	text-align: center;
+	min-width: 550px;
+	border: none;
 }
 .c-table td, th {
+	border: none;
 	padding: 1px 5px;
 }
