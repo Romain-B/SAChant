@@ -54,3 +54,29 @@ th, td {
 	border: none;
 	padding: 1px 5px;
 }
+
+/* Tab navigation */
+.tab-container {
+	display: flex;
+	gap: 10px;
+	margin-bottom: 15px;
+}
+.tab-button {
+	padding: 10px 15px;
+	cursor: pointer;
+	border: none;
+	background-color: #ddd;
+	font-size: 16px;
+}
+.tab-button.active {
+	background-color: #007bff;
+	color: white;
+}
+
+/* Hide all sections by default */
+.tab-content {
+	display: none;
+}
+.tab-content.active {
+	display: block;
+}

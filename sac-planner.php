@@ -47,6 +47,14 @@ function edt_assets() {
         filemtime(plugin_dir_url(__FILE__) . 'js/planner.js'),
         true
     );
+	// Our custom JS script to handle the form tabs
+	wp_enqueue_script(
+        'tab-js',
+        plugin_dir_url(__FILE__) . 'js/tab_handling.js',
+        array('jquery'), // call the dependencies
+        filemtime(plugin_dir_url(__FILE__) . 'js/tab_handling.js'),
+        true
+    );
 
     // Custom CSS for styling
     wp_enqueue_style(
@@ -72,15 +80,26 @@ function edt_shortcode() {
         <div id="activity-selection">
             <h3>Sélection des activités</h3>
 			
+   <!-- Tab Navigation -->
+    <div class="tab-container">
+        <button class="tab-button active" onclick="openTab('stages')">Stages</button>
+        <button class="tab-button" onclick="openTab('cours')">Technique vocale</button>
+        <button class="tab-button" onclick="openTab('repas')">Repas / Logement</button>
+    </div>
+
             <form id="activity-form">
+        <div id="stages" class="tab-content active">
                 <div class="activity-category">
-                    <h4>Stages à la semaine</h4>
+                    <h3>Stages à la semaine</h3>
                     <label><input type="checkbox" class="activity-checkbox" value="diapason">Diapa'Son (180€)</label><br>
                     <label><input type="checkbox" class="activity-checkbox" value="generason">Généra'Son (60€)</label><br>
 					<label><input type="checkbox" class="activity-checkbox" value="enchantillages">Enchantillages (80€)</label><br>
                 </div>
+                </div>
 
-                <div class="activity-category">
+        <div id="cours" class="tab-content">
+
+         <div class="activity-category">
 					<h3>Cours de technique vocale</h3>
                     
 					<div class="c-dropdown">
@@ -90,7 +109,7 @@ function edt_shortcode() {
 						<table class="c-table">
 							<thead>
 								<tr>
-									<th style="width:25%;"></th>
+									<th style="width:20%;"></th>
 									<th>Dim.</th>
 									<th>Lun.</th>
 									<th>Mar.</th>
@@ -120,7 +139,8 @@ function edt_shortcode() {
 						</table>
 						</div>
 					  </div>
-					  
+            
+            <br style="margin:12px">
 					  <div class="c-dropdown">
 						Progres'Son Collectif (25€)
 						
@@ -128,7 +148,7 @@ function edt_shortcode() {
 						<table class="c-table">
 							<thead>
 								<tr>
-									<th style="width:25%;"></th>
+									<th style="width:20%;"></th>
 									<th>Dim.</th>
 									<th>Lun.</th>
 									<th>Mar.</th>
@@ -158,13 +178,28 @@ function edt_shortcode() {
 						</table>
 						</div>
 					  </div><br>
-                </div>
-
-                <!-- Meal Plan -->
+          </div>
+          </div>
+                
+              <div id="repas" class="tab-content">
+ 
+               <!-- Repas -->
                 <h3>Repas pour la semaine:</h3>
-                <label><input type="checkbox" id="meal-checkbox"> Include Meals for the Week ($50)</label><br>
+
+                <label><input type="radio" class="other-radio" name="repas" value="none" checked>Aucun</label><br>
+                <label><input type="radio" class="other-radio" name="repas" value="repas_midi">Forfait midi (49€)</label><br>
+                <label><input type="radio" class="other-radio" name="repas" value="repas_total">Forfait complet (107€)</label><br>
+                
+                <!-- Logements -->
+                <h3>Logement pour la semaine:</h3>
+                <label><input type="radio" class="other-radio" name="logement" value="none" checked>Aucun</label><br>
+                <label><input type="radio" class="other-radio" name="logement" value="logement_camping">Camping (30€)</label><br>
+                <label><input type="radio" class="other-radio" name="logement" value="logement_habitant">Chez l'habitant (30€)</label><br>
+                <label><input type="radio" class="other-radio" name="logement" value="logement_chalet">Location Châlet (120€)</label><br>
+                </div>
+                
+                
             </form>
-        </div>
 
         <!-- Warning Message -->
         <p id="warning-message" style="color: red;"></p>
