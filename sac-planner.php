@@ -54,10 +54,9 @@ function edt_assets() {
         plugin_dir_url(__FILE__) . 'css/edt-style.css',
         array(),
         filemtime(plugin_dir_url(__FILE__) . 'css/edt-style.css'),
-		true
     );
 }
-add_action('wp_enqueue_scripts', 'edt_assets'); // tells WP to load the function with the scripts on a page
+add_action('wp_enqueue_scripts', 'edt_assets', 99); // tells WP to load the function with the scripts on a page
 
 function edt_shortcode() {
 /* Function that defines the form & interactive area, 
