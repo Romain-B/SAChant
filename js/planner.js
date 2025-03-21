@@ -227,7 +227,24 @@ document.addEventListener("DOMContentLoaded", function () {
 		updateUI();
 		});
 	});
+		
+		
+		
+	// Manage the incompatible events (disable checkbox when the other is checked)
+	const diapason = document.querySelector('input[value="diapason"]');
+	const enchantillages = document.querySelector('input[value="enchantillages"]');
 
+	function toggleDiapEnch (event){
+		if(event.target.checked){
+			(event.target === diapason ? enchantillages : diapason).disabled = true;
+		} else {
+			(event.target === diapason ? enchantillages : diapason).disabled = false;
+		}
+	}
+	diapason.addEventListener("change", toggleDiapEnch);
+	enchantillages.addEventListener("change", toggleDiapEnch);
+  
+  
 	//--- Functions to handle backend ---//
 
 	// Function to check overlap of new event with loaded events in the calendar
