@@ -91,10 +91,11 @@ function edt_shortcode() {
         <div id="stages" class="tab-content active">
                 <div class="activity-category">
                     <h3>Stages à la semaine</h3>
-                    <label><input type="checkbox" class="activity-checkbox" value="diapason">Diapa'Son (180€)</label><br>
-                    <label><input type="checkbox" class="activity-checkbox" value="generason">Généra'Son (60€)</label><br>
-					<label><input type="checkbox" class="activity-checkbox" value="enchantillages">Enchantillages (80€)</label><br>
+                    <label><input type="checkbox" class="activity-checkbox" value="diapason">Diapa'Son (180€)</label>
+                    <label><input type="checkbox" class="activity-checkbox" value="generason">Généra'Son (60€)* </label>
+					<label><input type="checkbox" class="activity-checkbox" value="enchantillages">Enchantillages (80€)**</label>
                 </div>
+				<div style="font-style: italic; font-size:8pt; line-height:8pt">*: ouvert aux enfants (30€) <br>**: réservé aux enfants</div>
                 </div>
 
         <div id="cours" class="tab-content">
@@ -186,23 +187,23 @@ function edt_shortcode() {
                <!-- Repas -->
                 <h3>Repas pour la semaine:</h3>
 
-                <label><input type="radio" class="other-radio" name="repas" value="none" checked>Aucun</label><br>
-                <label><input type="radio" class="other-radio" name="repas" value="repas_midi">Forfait midi (49€)</label><br>
-                <label><input type="radio" class="other-radio" name="repas" value="repas_total">Forfait complet (107€)</label><br>
+                <label><input type="radio" class="other-radio" name="repas" value="none" checked>Aucun</label>
+                <label><input type="radio" class="other-radio" name="repas" value="repas_midi">Forfait midi (49€)</label>
+                <label><input type="radio" class="other-radio" name="repas" value="repas_total">Forfait complet (107€)</label>
                 
                 <!-- Logements -->
                 <h3>Logement pour la semaine:</h3>
-                <label><input type="radio" class="other-radio" name="logement" value="none" checked>Aucun</label><br>
-                <label><input type="radio" class="other-radio" name="logement" value="logement_camping">Camping (30€)</label><br>
-                <label><input type="radio" class="other-radio" name="logement" value="logement_habitant">Chez l'habitant (30€)</label><br>
-                <label><input type="radio" class="other-radio" name="logement" value="logement_chalet">Location Châlet (120€)</label><br>
+                <label><input type="radio" class="other-radio" name="logement" value="none" checked>Aucun</label>
+                <label><input type="radio" class="other-radio" name="logement" value="logement_camping">Camping (30€)</label>
+                <label><input type="radio" class="other-radio" name="logement" value="logement_habitant">Chez l'habitant (30€)</label>
+                <label><input type="radio" class="other-radio" name="logement" value="logement_chalet">Location châlet (120€)</label>
                 </div>
                 
                 
             </form>
 
         <!-- Warning Message -->
-        <p id="warning-message" style="color: red;"></p>
+        <p id="warning-message" style="color: red; font-weight:bold"></p>
 
         <!-- FullCalendar Schedule Display -->
         <h3>Ton emploi du temps</h3>
