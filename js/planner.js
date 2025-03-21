@@ -1,5 +1,11 @@
-// Setup variables and functions
+
+//--- Setup variables and functions ---//
+
 const wk = [0,1,2,3,4,5,6].map(num => "2025-07-2"+num); // dates of the week
+
+const dayNames = ['Dimanche', 'Lundi', 'Mardi', 'Mercredi',
+				  'Jeudi', 'Vendredi', 'Samedi']; // for pretty printing
+const maxTimeSung = 5*60; // max singing per day threshold in min (5h)
 
 /* Function to make a recurring event object from basic info:
 	id: event ID for handling ("g_"+id to catch all recurring events)
@@ -23,7 +29,6 @@ function mk_event_r(id, title, sTime, eTime,
 		durMinutes[wk[d]] = ( (new Date(wk[d]+' '+sTime)) - (new Date(wk[d]+' '+eTime)) )/1000/60 ;
 	}
 	
-	
 	return {
 			id: id, title: title, 	  
 			groupId: "g_".concat(id), 
@@ -40,6 +45,7 @@ function mk_event_r(id, title, sTime, eTime,
 			editable: false, // we don't want users moving stuff around
 	};             
 }
+
 /* Function to make a simple event object from basic info:
 	id: event ID for handling 
 	title: display text on the calendar
@@ -100,7 +106,7 @@ const activity_list = {
 
 	// Activités communes/obligatoires	
 	"bilan": mk_event("bilan", "Bilans et rangement", "09:30", "12:30", date=wk[6], price=0, col='lightgrey', song=false),
-	"concert": mk_event("concert", "Concert", "18:00", "19:00", date=wk[6], price=0, col='lightgrey', song=false),
+	"concert": mk_event("concert", "Concert", "18:00", "19:00", date=wk[6], price=0, col='lightgrey', song=true),
 	"reunion": mk_event("reunion", "Réunion d'informations", "09:45", "10:15", date=wk[0], price=0, col='lightgrey', song=false),
 	
 	// Autres activités
@@ -108,6 +114,7 @@ const activity_list = {
 	"soiree_talents": mk_event("soiree_talents", "Soirée talents", "20:00", "22:00", date=wk[3], price=0, col='gold', song=false)
 };
 
+// List of other costs to keep track of
 const other_costs = {
 	repas_midi: {title:"Forfait repas à la semaine (midi)", price:49},
 	repas_total: {title:"Forfait repas à la semaine (complet)", price:107},
@@ -119,9 +126,7 @@ const other_costs = {
 
 
 
-
-
-// Reactive elements
+//--- Reactive elements ---//
 document.addEventListener("DOMContentLoaded", function () {
 	let selectedSlots = {}; // Storage array for selected activity start/end times (expanding recurring events)
 	let selectedActivities = [];  // Storage array for selected activity names
@@ -186,16 +191,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     calendar.render();	// show the calendar
 
-		//Other costs ... (meals, lodging)
-	  document.querySelectorAll('.other-radio').forEach(radio =>{
-			radio.addEventListener("change", function() {
-			selectedOtherCosts[this.name] = this.value;
-			updateUI();
-		  });
-	  });
   
   
-	// Creates an event handler for checkboxes on the webpage with the tag ".activity-checkbox"
+	// Create an event handler for checkboxes on the webpage with the tag ".activity-checkbox"
     document.querySelectorAll(".activity-checkbox").forEach(checkbox => {
         checkbox.addEventListener("change", function () {
 			// Upon change, then call functions to handle adding or removing the event to calendar.
@@ -214,11 +212,19 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+	
+	// Create an event handler for other costs ... (meals, lodging)
+	document.querySelectorAll('.other-radio').forEach(radio =>{
+		radio.addEventListener("change", function() {
+		selectedOtherCosts[this.name] = this.value;
+		updateUI();
+		});
+	});
 
+	//--- Functions to handle backend ---//
 
+	// Function to check overlap of new event with loaded events in the calendar
     function hasOverlap(newEvent) {
-		// Check overlap of new event with loaded events in the calendar
-		
 		s2 = new Date(newEvent.start);
 		e2 = new Date(newEvent.end);
 		for(var k in selectedSlots){
@@ -233,17 +239,16 @@ document.addEventListener("DOMContentLoaded", function () {
 		return false;
 	}
 
-
-    function addActivity(activityName) {
-		// Adds an activity (e.g. upon selection)
-		
+	// Function to add an activity upon selection
+    function addActivity(activityName) {		
         const activity = activity_list[activityName];
-        if (!activity) return false;
+        if (!activity) return false; // ensure activity exists
 
         if(!activity.extendedProps.recur){ // if it's not recurring
-          if (hasOverlap(activity_list[activityName])) {
-                  alert("❌ Vous ne pouvez pas vous dédoubler et assister à deux ateliers en même temps !");
-                  return false;
+			// check overlap
+			if (hasOverlap(activity_list[activityName])) {
+                alert("❌ Vous ne pouvez pas assister à deux ateliers en même temps !");
+                return false;
           }
         }
         calendar.addEvent(activity);
@@ -251,26 +256,41 @@ document.addEventListener("DOMContentLoaded", function () {
         return true;
     }
 	
+	// Function to remove an activity
     function removeActivity(activityName) {
-		// Removes an activity (e.g. upon deselection)
+		// remove form calendar
         calendar.getEvents().forEach(event => {
             if (event.id === activityName) {
                 event.remove();
             }
         });
         
-		// clear from the event time slot list, and the list of selected activities.
+		// clear from event time slot list and list of selected activities.
 		delete selectedSlots[activityName]; 
         selectedActivities = selectedActivities.filter(a => a !== activityName);
     }
+	
+	// Function for keeping track of time sung per day
+	function updateTimePerDay(activityName) {
+			let activityDuration = activity_list[activityName].extendedProps.duration;
+      
+      // if activity is already in the array, then the function is called to remove the time
+      if(selectedActivities.includes(activityName)){
+      	for (var d of Object.keys(activityDuration)){
+						timePerDay[d] -= activityDuration[d];
+          }
+			} else { // else add the time
+      	  for (var d of Object.keys(activityDuration)){
+						timePerDay[d] += activityDuration[d];
+          }
+      }
+	}
 
-    function updateUI() {
-		// Updates the page when an action is performed
-        updatePriceDetails();
-    }
-
+	
+	//--- Functions to update webpage elements ---//
+	
+	// Function for keeping the price list up to date
     function updatePriceDetails() {
-		// Keeps the price list up to date
         let priceList = document.getElementById("price-details");
         let totalPriceElement = document.getElementById("total-price");
         priceList.innerHTML = "";
@@ -299,20 +319,6 @@ document.addEventListener("DOMContentLoaded", function () {
         totalPriceElement.innerText = `Prix Total: €${(totalPrice).toFixed(2)}`;
     }
 	
-	function updateTimePerDay(activityName) {
-			let activityDuration = activity_list[activityName].extendedProps.duration;
-      
-      // if activity is already in the array, then the function is called to remove the time
-      if(selectedActivities.includes(activityName)){
-      	for (var d of Object.keys(activityDuration)){
-						timePerDay[d] -= activityDuration[d];
-          }
-			} else { // else add the time
-      	  for (var d of Object.keys(activityDuration)){
-						timePerDay[d] += activityDuration[d];
-          }
-      }
-	}
 	
 	// Function to update the warning text when going above max singing time per day
 	function updateWarning(){
@@ -345,10 +351,17 @@ document.addEventListener("DOMContentLoaded", function () {
 		warningElement.innerText = wString;
 		//console.log(timePerDay);
     }
+	
+	// Wrapper function for updating webpage elements when an action is performed
+    function updateUI() {
+        updatePriceDetails();
+		updateWarning();
+    }
+});
 
+//--- PDF saving ---//
 
-// For PDF saving
-const savePdfBtn = document.getElementById("save-pdf"); // get the save button
+	const savePdfBtn = document.getElementById("save-pdf"); // get the save button
 savePdfBtn.addEventListener("click", function () {		// attach an event listener to it
 	const { jsPDF } = window.jspdf;
 	
