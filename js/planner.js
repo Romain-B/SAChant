@@ -349,7 +349,9 @@ document.addEventListener("DOMContentLoaded", function () {
         let totalPrice = 0;
 		
 		// activities
-        selectedActivities.forEach(activityName => {
+		// filter out groupped activity doublets for calendar display
+		let filteredActivities = selectedActivities.filter(o => !Object.values(groups).flat().some(i => i===o));
+		filteredActivities.forEach(activityName => {
             let price = activity_list[activityName].extendedProps.price;
             let listItem = document.createElement("li");
             let activityString = activity_list[activityName].title;
