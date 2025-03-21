@@ -2,7 +2,8 @@
 /**
  * Plugin Name: SAChant
  * Description: Plugin pour plannifier sa semaine Allez'Chant.
- * Version:     0.2
+ * Plugin URI: https://github.com/Romain-B/SAChant
+ * Version:     0.3
  * Author:      Romain B, Lucas, Bathilde
  * License:     GPL2
  */
@@ -16,8 +17,8 @@ function edt_assets() {
 	// what this does (per asset):
 	// 	WP function to load scripts
 	// 	Script unique handle (tag)
-	//  Path to the script in plugin
-	//  Load jquery as dependency if necessary
+	//  Path to the script in plugin directory
+	//  Load file dependencies if necessary (e.g. jquery or calendar)
     
     // FullCalendar JS (for the interactive calendar)
     wp_enqueue_script(
