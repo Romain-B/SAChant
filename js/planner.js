@@ -300,7 +300,17 @@ document.addEventListener("DOMContentLoaded", function () {
         selectedActivities.forEach(activityName => {
             let price = activity_list[activityName].extendedProps.price;
             let listItem = document.createElement("li");
-            listItem.innerText = `${activity_list[activityName].title}: €${price}`;
+            let activityString = activity_list[activityName].title;
+			
+            // add the day & time if it's a specific activity
+            if(!activity_list[activityName].extendedProps.recur){
+            	let activityDate = new Date(activity_list[activityName].start);
+				activityString += " - " + dayNames[activityDate.getDay()] + " " + 
+							activityDate.getHours() + "h" + 
+							String(activityDate.getMinutes()).padStart(2,0);
+            }
+			
+            listItem.innerText = `${activityString}: €${price}`;
             priceList.appendChild(listItem);
             totalPrice += price;
         });
@@ -360,6 +370,62 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 //--- PDF saving ---//
+
+const savePdfBtn = document.getElementById("save-pdf"); // get the save button
+savePdfBtn.addEventListener("click", function () {		// attach an event listener to it
+	const { jsPDF } = window.jspdf;
+	
+	// Fetch the calendar & price detail sections to render in the pdf
+	//const edtEl = document.getElementById("edt-display"); 
+	const priceEl = document.getElementById("price-section");
+   // Fetch the price detail section
+	let priceList = priceEl.querySelector("#price-details"); // Selects the <ul> list
+	let totalPrice = priceEl.querySelector("#total-price"); // Selects the <h4 id="total-price">
+
+
+	// Instantiate the pdf
+	let pdf = new jsPDF('p', 'mm', 'a4');
+  
+	// Page dimensions
+	let pdfWidth = pdf.internal.pageSize.getWidth() - 20; // Leave margins
+	let pdfHeight = pdf.internal.pageSize.getHeight() - 20; // Leave margins
+
+  let line = 10; // Start position
+
+  // Title
+  pdf.setFont("Helvetica", "bold");
+  pdf.setFontSize(16);
+  pdf.text("Simulation de semaine Allez'Chante", 10, line);
+  line += 15;
+
+  // Subtitle "Détail:"
+  pdf.setFontSize(14);
+  pdf.text("Détail:", 10, line);
+  line += 8;
+
+  // Set normal font for list items
+  pdf.setFont("Helvetica", "normal");
+  pdf.setFontSize(12);
+
+  // Loop through the list items
+  priceList.querySelectorAll("li").forEach(e => {
+      pdf.text("• " + e.textContent, 15, line); // Add bullet point
+      line += 6; // Space between lines
+  });
+
+  // Add spacing before total price
+  line += 5;
+
+  // Add total price in bold
+  pdf.setFont("Helvetica", "bold");
+  pdf.setFontSize(14);
+  pdf.text(totalPrice.textContent, 10, line);
+  
+  line += 15;
+  pdf.save("simulation_allezchant.pdf");
+});
+
+
 
 	const savePdfBtn = document.getElementById("save-pdf"); // get the save button
 savePdfBtn.addEventListener("click", function () {		// attach an event listener to it
