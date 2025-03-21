@@ -17,12 +17,15 @@ const maxTimeSung = 5*60; // max singing per day threshold in min (5h)
 	price: price for the activity
 	song: if the event is singing (to compute max song/day)
 */			
-function mk_event_r(id, title, sTime, eTime, 
-					price,
-					col="royalblue",
-					sDate=wk[0], eDate=wk[6], 
-					dow=[0,1,2,3,4,5],
-					song=true){
+function mk_event_r({
+	id, title, 
+	sTime, eTime, 
+	price, 
+	col="royalblue",
+	sDate=wk[0], eDate=wk[6], 
+	dow=[0,1,2,3,4,5],
+	song=true
+	}){
 	// compute duration in minutes
 	var durMinutes = {}; 
 	for(var d of dow){
@@ -54,8 +57,13 @@ function mk_event_r(id, title, sTime, eTime,
 	col: display color of the event in the calendar
 	song: if the event is singing (to compute max song/day)	
 */	
-function mk_event(id, title, sTime, eTime, date, price,
-				  col="royalblue", song=true){
+function mk_event({
+	id, title, 
+	sTime, eTime, date, 
+	price,
+	col="royalblue", 
+	song=true}
+	){
 	
 	// compute duration in minutes
 	var durMinutes = {}; 
@@ -78,54 +86,58 @@ function mk_event(id, title, sTime, eTime, date, price,
 // Make the list of all event/activities
 const activity_list = {
 	// stages
-	"diapason": mk_event_r("diapason", "Choeur Diapa'Son", "14:00", "16:00", price=180, col='royalblue'),
-	"generason": mk_event_r("generason", "Choeur Généra'Son", "10:30", "11:30", price=60, col='firebrick'),
-	"enchantillages": mk_event_r("enchantillages", "Choeur Enchantillages", "14:00", "16:00", price=80, col="darkturquoise"),
+	"diapason": mk_event_r({id:"diapason", title:"Choeur Diapa'Son", sTime:"14:00", eTime:"16:00", price:180, col:'royalblue'}),
+	"generason": mk_event_r({id:"generason", title:"Choeur Généra'Son", sTime:"10:30", eTime:"11:30", price:60, col:'firebrick'}),
+	"enchantillages": mk_event_r({id:"enchantillages", title:"Choeur Enchantillages", sTime:"14:00", eTime:"16:00", price:80, col:"darkturquoise"}),
 	
-	// ahcompagnons
-	"ahcompagnons": mk_event("ahcompagnons", "Ah'Compagnons (lancement)", "11:30", "12:30", date=wk[0], price=90, col='darkslateblue'),
-	"ahcompagnons_1": mk_event_r("ahcompagnons_1", "Ah'Compagnons", "11:30", "11:50", dow = [1,2,4,5], price=0, col='darkslateblue'),
-	"ahcompagnons_2": mk_event_r("ahcompagnons_2", "Ah'Compagnons", "11:55", "12:15", dow = [1,2,4,5], price=0, col='darkslateblue'),
-	"ahcompagnons_3": mk_event_r("ahcompagnons_3", "Ah'Compagnons", "18:25", "18:45", dow = [1,2,3,4], price=0, col='darkslateblue'),
+  	// ahcompagnons
+	"ahcompagnons": mk_event_r({id:"ahcompagnons", title:"Ah'Compagnons", sTime:"11:30", eTime:"12:30", dow:[0], price:90, col:'darkslateblue'}),
+	"ahcompagnons_1": mk_event_r({id:"ahcompagnons_1", title:"Ah'Compagnons", sTime:"11:30", eTime:"11:50", dow:[1,2,4,5], price:0, col:'darkslateblue'}),
+	"ahcompagnons_2": mk_event_r({id:"ahcompagnons_2", title:"Ah'Compagnons", sTime:"11:55", eTime:"12:15", dow:[1,2,4,5], price:0, col:'darkslateblue'}),
+	"ahcompagnons_3": mk_event_r({id:"ahcompagnons_3", title:"Ah'Compagnons", sTime:"18:25", eTime:"18:45", dow:[1,2,3,4], price:0, col:'darkslateblue'}),
 	
 	// progressons indiv après-midi
-	"prog_solo_dipm": mk_event("prog_solo_dipm", "Progres'Son Individuel (Créneau 45min)", "14:00", "16:15", date=wk[0], price=50, col='cadetblue'),
-	"prog_solo_lupm": mk_event("prog_solo_lupm", "Progres'Son Individuel (Créneau 45min)", "14:00", "16:15", date=wk[1], price=50, col='cadetblue'),
-	"prog_solo_mapm": mk_event("prog_solo_mapm", "Progres'Son Individuel (Créneau 45min)", "14:00", "16:15", date=wk[2], price=50, col='cadetblue'),
-	"prog_solo_jepm": mk_event("prog_solo_jepm", "Progres'Son Individuel (Créneau 45min)", "14:00", "16:15", date=wk[4], price=50, col='cadetblue'),
+	"prog_solo_dipm": mk_event({id:"prog_solo_dipm", title:"Progres'Son Individuel (Créneau 45min)", sTime:"14:00", eTime:"16:15", date:wk[0], price:50, col:'cadetblue'}),
+	"prog_solo_lupm": mk_event({id:"prog_solo_lupm", title:"Progres'Son Individuel (Créneau 45min)", sTime:"14:00", eTime:"16:15", date:wk[1], price:50, col:'cadetblue'}),
+	"prog_solo_mapm": mk_event({id:"prog_solo_mapm", title:"Progres'Son Individuel (Créneau 45min)", sTime:"14:00", eTime:"16:15", date:wk[2], price:50, col:'cadetblue'}),
+	"prog_solo_jepm": mk_event({id:"prog_solo_jepm", title:"Progres'Son Individuel (Créneau 45min)", sTime:"14:00", eTime:"16:15", date:wk[4], price:50, col:'cadetblue'}),
 	// progressons indiv matin
-	"prog_solo_luam": mk_event("prog_solo_luam", "Progres'Son Individuel (Créneau 45min)", "10:00", "11:30", date=wk[1], price=50, col='cadetblue'),
-	"prog_solo_maam": mk_event("prog_solo_maam", "Progres'Son Individuel (Créneau 45min)", "10:00", "11:30", date=wk[2], price=50, col='cadetblue'),
-	"prog_solo_jeam": mk_event("prog_solo_jeam", "Progres'Son Individuel (Créneau 45min)", "10:00", "11:30", date=wk[4], price=50, col='cadetblue'),
-	"prog_solo_veam": mk_event("prog_solo_veam", "Progres'Son Individuel (Créneau 45min)", "10:00", "11:30", date=wk[5], price=50, col='cadetblue'),
+	"prog_solo_luam": mk_event({id:"prog_solo_luam", title:"Progres'Son Individuel (Créneau 45min)", sTime:"10:00", eTime:"11:30", date:wk[1], price:50, col:'cadetblue'}),
+	"prog_solo_maam": mk_event({id:"prog_solo_maam", title:"Progres'Son Individuel (Créneau 45min)", sTime:"10:00", eTime:"11:30", date:wk[2], price:50, col:'cadetblue'}),
+	"prog_solo_jeam": mk_event({id:"prog_solo_jeam", title:"Progres'Son Individuel (Créneau 45min)", sTime:"10:00", eTime:"11:30", date:wk[4], price:50, col:'cadetblue'}),
+	"prog_solo_veam": mk_event({id:"prog_solo_veam", title:"Progres'Son Individuel (Créneau 45min)", sTime:"10:00", eTime:"11:30", date:wk[5], price:50, col:'cadetblue'}),
 	
 	// progressons collectif après-midi
-	"prog_coll_dipm": mk_event("prog_coll_dipm", "Progres'Son Collectif", "16:30", "17:15", date=wk[0], price=25, col='green'),
-	"prog_coll_lupm": mk_event("prog_coll_lupm", "Progres'Son Collectif", "16:30", "17:15", date=wk[1], price=25, col='green'),
-	"prog_coll_mapm": mk_event("prog_coll_mapm", "Progres'Son Collectif", "16:30", "17:15", date=wk[2], price=25, col='green'),
-	"prog_coll_jepm": mk_event("prog_coll_jepm", "Progres'Son Collectif", "16:30", "17:15", date=wk[4], price=25, col='green'),
+	"prog_coll_dipm": mk_event({id:"prog_coll_dipm", title:"Progres'Son Collectif", sTime:"16:30", eTime:"17:15", date:wk[0], price:25, col:'green'}),
+	"prog_coll_lupm": mk_event({id:"prog_coll_lupm", title:"Progres'Son Collectif", sTime:"16:30", eTime:"17:15", date:wk[1], price:25, col:'green'}),
+	"prog_coll_mapm": mk_event({id:"prog_coll_mapm", title:"Progres'Son Collectif", sTime:"16:30", eTime:"17:15", date:wk[2], price:25, col:'green'}),
+	"prog_coll_jepm": mk_event({id:"prog_coll_jepm", title:"Progres'Son Collectif", sTime:"16:30", eTime:"17:15", date:wk[4], price:25, col:'green'}),
 	// progressons collectif matin
-	"prog_coll_luam": mk_event("prog_coll_luam", "Progres'Son Collectif", "11:40", "12:25", date=wk[1], price=25, col='green'),
-	"prog_coll_maam": mk_event("prog_coll_maam", "Progres'Son Collectif", "11:40", "12:25", date=wk[2], price=25, col='green'),
-	"prog_coll_jeam": mk_event("prog_coll_jeam", "Progres'Son Collectif", "11:40", "12:25", date=wk[4], price=25, col='green'),
-	"prog_coll_veam": mk_event("prog_coll_veam", "Progres'Son Collectif", "11:40", "12:25", date=wk[5], price=25, col='green'),
+	"prog_coll_luam": mk_event({id:"prog_coll_luam", title:"Progres'Son Collectif", sTime:"11:40", eTime:"12:25", date:wk[1], price:25, col:'green'}),
+	"prog_coll_maam": mk_event({id:"prog_coll_maam", title:"Progres'Son Collectif", sTime:"11:40", eTime:"12:25", date:wk[2], price:25, col:'green'}),
+	"prog_coll_jeam": mk_event({id:"prog_coll_jeam", title:"Progres'Son Collectif", sTime:"11:40", eTime:"12:25", date:wk[4], price:25, col:'green'}),
+	"prog_coll_veam": mk_event({id:"prog_coll_veam", title:"Progres'Son Collectif", sTime:"11:40", eTime:"12:25", date:wk[5], price:25, col:'green'}),
 	
 	// explorasons
-	"explo_di": mk_event("prog_coll_dipm", "Progres'Son Collectif", "16:15", "18:15", date=wk[0], price=30, col='darkcyan'),
-	"explo_lu": mk_event("prog_coll_lupm", "Progres'Son Collectif", "16:15", "18:15", date=wk[1], price=30, col='darkcyan'),
-	"explo_ma": mk_event("prog_coll_mapm", "Progres'Son Collectif", "16:15", "18:15", date=wk[2], price=30, col='darkcyan'),
-	"explo_me": mk_event("prog_coll_jepm", "Progres'Son Collectif", "16:15", "18:15", date=wk[4], price=30, col='darkcyan'),
-	"explo_je": mk_event("prog_coll_jepm", "Progres'Son Collectif", "16:15", "18:15", date=wk[5], price=30, col='darkcyan'),
+	"explo_di": mk_event({id:"prog_coll_dipm", title:"Progres'Son Collectif", sTime:"16:15", eTime:"18:15", date:wk[0], price:30, col:'darkcyan'}),
+	"explo_lu": mk_event({id:"prog_coll_lupm", title:"Progres'Son Collectif", sTime:"16:15", eTime:"18:15", date:wk[1], price:30, col:'darkcyan'}),
+	"explo_ma": mk_event({id:"prog_coll_mapm", title:"Progres'Son Collectif", sTime:"16:15", eTime:"18:15", date:wk[2], price:30, col:'darkcyan'}),
+	"explo_me": mk_event({id:"prog_coll_jepm", title:"Progres'Son Collectif", sTime:"16:15", eTime:"18:15", date:wk[4], price:30, col:'darkcyan'}),
+	"explo_je": mk_event({id:"prog_coll_jepm", title:"Progres'Son Collectif", sTime:"16:15", eTime:"18:15", date:wk[5], price:30, col:'darkcyan'}),
 
 	// Activités communes/obligatoires	
-	"bilan": mk_event("bilan", "Bilans et rangement", "09:30", "12:30", date=wk[6], price=0, col='lightgrey', song=false),
-	"concert": mk_event("concert", "Concert", "18:00", "19:00", date=wk[6], price=0, col='lightgrey', song=true),
-	"reunion": mk_event("reunion", "Réunion d'informations", "09:45", "10:15", date=wk[0], price=0, col='lightgrey', song=false),
+	"bilan": mk_event({id:"bilan", title:"Bilans et rangement", sTime:"09:30", eTime:"12:30", date:wk[6], price:0, col:'lightgrey', song:false}),
+	"concert": mk_event({id:"concert", title:"Concert", sTime:"18:00", eTime:"19:00", date:wk[6], price:0, col:'lightgrey', song:true}),
+	"reunion": mk_event({id:"reunion", title:"Réunion d'informations", sTime:"09:45", eTime:"10:15", date:wk[0], price:0, col:'lightgrey', song:false}),
 	
 	// Autres activités
-	"bal_folk": mk_event("bal_folk", "Bal folk et scène ouverte", "20:00", "22:00", date=wk[2], price=0, col='gold', song=false),
-	"soiree_talents": mk_event("soiree_talents", "Soirée talents", "20:00", "22:00", date=wk[3], price=0, col='gold', song=false)
+	"bal_folk": mk_event({id:"bal_folk", title:"Bal folk et scène ouverte", sTime:"20:00", eTime:"22:00", date:wk[2], price:0, col:'gold', song:false}),
+	"soiree_talents": mk_event({id:"soiree_talents", title:"Soirée talents", sTime:"20:00", eTime:"22:00", date:wk[3], price:0, col:'gold', song:false})
 };
+
+// groups of ids for multi-recurrent activities
+const groups = {"ahcompagnons":["ahcompagnons_1", "ahcompagnons_2", "ahcompagnons_3"]};
+
 
 // List of other costs to keep track of
 const other_costs = {
@@ -273,6 +285,11 @@ document.addEventListener("DOMContentLoaded", function () {
     function addActivity(activityName) {		
         const activity = activity_list[activityName];
         if (!activity) return false; // ensure activity exists
+		
+		//add grouped events
+    	if(Object.keys(groups).some(x => x === activityName)){
+        		groups[activityName].forEach(addActivity);
+        }
 
         if(!activity.extendedProps.recur){ // if it's not recurring
 			// check overlap
@@ -288,7 +305,12 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 	// Function to remove an activity
     function removeActivity(activityName) {
-		// remove form calendar
+		//remove grouped events
+    	if(Object.keys(groups).some(x => x === activityName)){
+        	groups[activityName].forEach(removeActivity);
+        }
+		
+		// remove from calendar
         calendar.getEvents().forEach(event => {
             if (event.id === activityName) {
                 event.remove();
@@ -302,17 +324,17 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 	// Function for keeping track of time sung per day
 	function updateTimePerDay(activityName) {
-			let activityDuration = activity_list[activityName].extendedProps.duration;
+		let activityDuration = activity_list[activityName].extendedProps.duration;
       
-      // if activity is already in the array, then the function is called to remove the time
-      if(selectedActivities.includes(activityName)){
-      	for (var d of Object.keys(activityDuration)){
-						timePerDay[d] -= activityDuration[d];
-          }
-			} else { // else add the time
-      	  for (var d of Object.keys(activityDuration)){
-						timePerDay[d] += activityDuration[d];
-          }
+		// if activity is already in the array, then the function is called to remove the time
+		if(selectedActivities.includes(activityName)){
+			for (var d of Object.keys(activityDuration)){
+				timePerDay[d] -= activityDuration[d];
+			}
+		} else { // else add the time
+			for (var d of Object.keys(activityDuration)){
+				timePerDay[d] += activityDuration[d];
+			}
       }
 	}
 
