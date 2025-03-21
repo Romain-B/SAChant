@@ -312,20 +312,39 @@ document.addEventListener("DOMContentLoaded", function () {
 						timePerDay[d] += activityDuration[d];
           }
       }
-      	
-      
 	}
-
-    function addMinutes(time, mins) {
-		// Computes total of minutes
-        let [hours, minutes] = time.split(":").map(Number);
-        minutes += mins;
-        hours += Math.floor(minutes / 60);
-        minutes %= 60;
-        return `${hours}:${minutes < 10 ? "0" + minutes : minutes}`;
-    }	
-});
-
+	
+	// Function to update the warning text when going above max singing time per day
+	function updateWarning(){
+		let warningElement = document.getElementById("warning-message");
+		let wString = ""; // to build the warning string
+		let dString = ""; // for days pretty print
+		
+		// get the weekday indices where total time is > threshold
+		let overTime = Object.values(timePerDay).map(
+				(x, i) => x > maxTimeSung ? i:-1
+			).filter(i => i !== -1);
+      
+		if(overTime.length > 0){
+			wString = "Il est recommendé de chanter moins de " +
+					  (maxTimeSung/60) + " heures par jour. Le temps chanté ";
+			if(overTime.length == 1){
+				wString += dayNames[overTime[0]];
+			} else {
+				for(let i = (overTime.length-1) ; i >=0 ; i-=1){
+					if(i == (overTime.length -2)){
+						dString = " et " + dString;
+					} else if(i < (overTime.length -2)){
+						dString = ", " + dString;
+					}
+					dString = dayNames[overTime[i]] + dString;
+				}
+		   }
+		   wString += dString+" égale ou dépasse ce seuil.";
+		}
+		warningElement.innerText = wString;
+		//console.log(timePerDay);
+    }
 
 
 // For PDF saving
