@@ -79,8 +79,14 @@ function mk_event(id, title, sTime, eTime, date, price,
 const activity_list = {
 	// stages
 	"diapason": mk_event_r("diapason", "Choeur Diapa'Son", "14:00", "16:00", price=180, col='royalblue'),
-	"generason": mk_event_r("generason", "Choeur Généra'Son", "11:30", "13:00", price=60, col='firebrick'),
+	"generason": mk_event_r("generason", "Choeur Généra'Son", "10:30", "11:30", price=60, col='firebrick'),
 	"enchantillages": mk_event_r("enchantillages", "Choeur Enchantillages", "14:00", "16:00", price=80, col="darkturquoise"),
+	
+	// ahcompagnons
+	"ahcompagnons": mk_event("ahcompagnons", "Ah'Compagnons (lancement)", "11:30", "12:30", date=wk[0], price=90, col='darkslateblue'),
+	"ahcompagnons_1": mk_event_r("ahcompagnons_1", "Ah'Compagnons", "11:30", "11:50", dow = [1,2,4,5], price=0, col='darkslateblue'),
+	"ahcompagnons_2": mk_event_r("ahcompagnons_2", "Ah'Compagnons", "11:55", "12:15", dow = [1,2,4,5], price=0, col='darkslateblue'),
+	"ahcompagnons_3": mk_event_r("ahcompagnons_3", "Ah'Compagnons", "18:25", "18:45", dow = [1,2,3,4], price=0, col='darkslateblue'),
 	
 	// progressons indiv après-midi
 	"prog_solo_dipm": mk_event("prog_solo_dipm", "Progres'Son Individuel (Créneau 45min)", "14:00", "16:15", date=wk[0], price=50, col='cadetblue'),
