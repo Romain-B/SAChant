@@ -225,14 +225,12 @@ document.addEventListener("DOMContentLoaded", function () {
             const activityName = this.value;
             if (this.checked) {
                 if (addActivity(activityName)) {
-					updateTimePerDay(activityName);
                     updateUI();
                 } else { // if adding the activity fails (e.g. event overlap), then don't check.
                     this.checked = false; 
                 }
             } else {
                 removeActivity(activityName);
-				updateTimePerDay(activityName);
                 updateUI();
             }
         });
@@ -300,6 +298,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         calendar.addEvent(activity);
         selectedActivities.push(activityName);
+		updateTimePerDay(activityName);
         return true;
     }
 	
@@ -320,6 +319,7 @@ document.addEventListener("DOMContentLoaded", function () {
 		// clear from event time slot list and list of selected activities.
 		delete selectedSlots[activityName]; 
         selectedActivities = selectedActivities.filter(a => a !== activityName);
+		updateTimePerDay(activityName); 
     }
 	
 	// Function for keeping track of time sung per day
