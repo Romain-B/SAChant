@@ -83,15 +83,15 @@ const activity_list = {
 	"enchantillages": mk_event_r("enchantillages", "Choeur Enchantillages", "14:00", "16:00", price=80, col="darkturquoise"),
 	
 	// progressons indiv après-midi
-	"prog_solo_dipm": mk_event("prog_solo_dipm", "Progres'Son Individuel (Créneau 45min)", "14:00", "16:15", date=wk[0], price=50, col='turquoise'),
-	"prog_solo_lupm": mk_event("prog_solo_lupm", "Progres'Son Individuel (Créneau 45min)", "14:00", "16:15", date=wk[1], price=50, col='turquoise'),
-	"prog_solo_mapm": mk_event("prog_solo_mapm", "Progres'Son Individuel (Créneau 45min)", "14:00", "16:15", date=wk[2], price=50, col='turquoise'),
-	"prog_solo_jepm": mk_event("prog_solo_jepm", "Progres'Son Individuel (Créneau 45min)", "14:00", "16:15", date=wk[4], price=50, col='turquoise'),
+	"prog_solo_dipm": mk_event("prog_solo_dipm", "Progres'Son Individuel (Créneau 45min)", "14:00", "16:15", date=wk[0], price=50, col='cadetblue'),
+	"prog_solo_lupm": mk_event("prog_solo_lupm", "Progres'Son Individuel (Créneau 45min)", "14:00", "16:15", date=wk[1], price=50, col='cadetblue'),
+	"prog_solo_mapm": mk_event("prog_solo_mapm", "Progres'Son Individuel (Créneau 45min)", "14:00", "16:15", date=wk[2], price=50, col='cadetblue'),
+	"prog_solo_jepm": mk_event("prog_solo_jepm", "Progres'Son Individuel (Créneau 45min)", "14:00", "16:15", date=wk[4], price=50, col='cadetblue'),
 	// progressons indiv matin
-	"prog_solo_luam": mk_event("prog_solo_luam", "Progres'Son Individuel (Créneau 45min)", "10:00", "11:30", date=wk[1], price=50, col='turquoise'),
-	"prog_solo_maam": mk_event("prog_solo_maam", "Progres'Son Individuel (Créneau 45min)", "10:00", "11:30", date=wk[2], price=50, col='turquoise'),
-	"prog_solo_jeam": mk_event("prog_solo_jeam", "Progres'Son Individuel (Créneau 45min)", "10:00", "11:30", date=wk[4], price=50, col='turquoise'),
-	"prog_solo_veam": mk_event("prog_solo_veam", "Progres'Son Individuel (Créneau 45min)", "10:00", "11:30", date=wk[5], price=50, col='turquoise'),
+	"prog_solo_luam": mk_event("prog_solo_luam", "Progres'Son Individuel (Créneau 45min)", "10:00", "11:30", date=wk[1], price=50, col='cadetblue'),
+	"prog_solo_maam": mk_event("prog_solo_maam", "Progres'Son Individuel (Créneau 45min)", "10:00", "11:30", date=wk[2], price=50, col='cadetblue'),
+	"prog_solo_jeam": mk_event("prog_solo_jeam", "Progres'Son Individuel (Créneau 45min)", "10:00", "11:30", date=wk[4], price=50, col='cadetblue'),
+	"prog_solo_veam": mk_event("prog_solo_veam", "Progres'Son Individuel (Créneau 45min)", "10:00", "11:30", date=wk[5], price=50, col='cadetblue'),
 	
 	// progressons collectif après-midi
 	"prog_coll_dipm": mk_event("prog_coll_dipm", "Progres'Son Collectif", "16:30", "17:15", date=wk[0], price=25, col='green'),
@@ -103,6 +103,13 @@ const activity_list = {
 	"prog_coll_maam": mk_event("prog_coll_maam", "Progres'Son Collectif", "11:40", "12:25", date=wk[2], price=25, col='green'),
 	"prog_coll_jeam": mk_event("prog_coll_jeam", "Progres'Son Collectif", "11:40", "12:25", date=wk[4], price=25, col='green'),
 	"prog_coll_veam": mk_event("prog_coll_veam", "Progres'Son Collectif", "11:40", "12:25", date=wk[5], price=25, col='green'),
+	
+	// explorasons
+	"explo_di": mk_event("prog_coll_dipm", "Progres'Son Collectif", "16:15", "18:15", date=wk[0], price=30, col='darkcyan'),
+	"explo_lu": mk_event("prog_coll_lupm", "Progres'Son Collectif", "16:15", "18:15", date=wk[1], price=30, col='darkcyan'),
+	"explo_ma": mk_event("prog_coll_mapm", "Progres'Son Collectif", "16:15", "18:15", date=wk[2], price=30, col='darkcyan'),
+	"explo_me": mk_event("prog_coll_jepm", "Progres'Son Collectif", "16:15", "18:15", date=wk[4], price=30, col='darkcyan'),
+	"explo_je": mk_event("prog_coll_jepm", "Progres'Son Collectif", "16:15", "18:15", date=wk[5], price=30, col='darkcyan'),
 
 	// Activités communes/obligatoires	
 	"bilan": mk_event("bilan", "Bilans et rangement", "09:30", "12:30", date=wk[6], price=0, col='lightgrey', song=false),

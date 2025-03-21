@@ -81,8 +81,8 @@ function edt_shortcode() {
 			
 		<!-- Tab Navigation -->
 			<div class="tab-container">
-				<button class="tab-button active" onclick="openTab('stages')">Stages</button>
-				<button class="tab-button" onclick="openTab('cours')">Technique vocale</button>
+				<button class="tab-button active" onclick="openTab('stages')">Stages à la semaine</button>
+				<button class="tab-button" onclick="openTab('cours')">Ateliers ponctuels</button>
 				<button class="tab-button" onclick="openTab('repas')">Repas / Logement</button>
 			</div>
 
@@ -105,11 +105,11 @@ function edt_shortcode() {
 					</div>
                 </div>
 
-		<!-- Tab Cours de technique vocale -->
+		<!-- Tab Atelier ponctuels -->
 				<div id="cours" class="tab-content">
 					<div class="activity-category">
 					
-						<h5>Cours de technique vocale</h5>
+						<h5>Cours de technique vocale et ateliers</h5>
                     
 						<div class="c-dropdown">
 							Progres'Son Individuel - Créneau de 45min (50€)
@@ -187,6 +187,36 @@ function edt_shortcode() {
 								</table>
 							</div>
 						</div>
+						<br style="margin:12px">
+						
+						<div class="c-dropdown">
+							Explora'Sons (30€)
+						
+							<div class="c-dropdown-content">
+								<table class="c-table">
+									<thead>
+										<tr>
+											<th style="width:20%;"></th>
+											<th>Dim.</th>
+											<th>Lun.</th>
+											<th>Mar.</th>
+											<th>Mer.</th>
+											<th>Jeu.</th>
+											<th>Ven.</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr><td>16:15-18:15</td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="explo_di"></label></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="explo_lu"></label></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="explo_ma"></label></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="explo_me"></label></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="explo_je"></label></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
 						<br>
 					</div>
 				</div>
@@ -214,14 +244,14 @@ function edt_shortcode() {
         <p id="warning-message" class="warn-sing"></p>
 
         <!-- FullCalendar Schedule Display -->
-        <h4>Ton emploi du temps</h4>
+        <h4>Emploi du temps de la sélection</h4>
         <div id="edt-display"></div>
 
         <!-- Price Details -->
 		<div id="price-section">
 			<h5>Détail:</h5>
 			<ul id="price-details"></ul>
-			<h5 id="total-price">Total: €0</h5>
+			<h4 id="total-price">Total: €0</h4>
 		</div>
 		<br>
 		<button id="save-pdf">Enregistrer le détail de la simulation (PDF)</button>
