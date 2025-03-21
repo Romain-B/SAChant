@@ -1,4 +1,4 @@
-/* styling for the calendar display */
+/* Calendar display styling */
 
 .fc-day{
     font-size: .8em;
@@ -8,7 +8,7 @@
     font-size: .6em;
 }
 
-/*These are required to fix calendar display broken by the WP theme...*/
+/* To fix calendar display broken by the WP themes...*/
 table {
 	margin: 0 0;
 }
@@ -16,7 +16,16 @@ th, td {
 	line-height: none;
 }
 
-/*Styling for the form
+/* Warning message style*/
+.warn-sing{
+  color: red; 
+  font-weight:bold;
+  line-height:1;
+  font-size:12pt;
+}
+
+
+/* Styling for the custom form elements
 	c-dropdown is a custom class which displays a box with 
 	checkboxes (c-dropdown-content) upon mouse hover for sub-activities
 */
@@ -55,7 +64,7 @@ th, td {
 	padding: 1px 5px;
 }
 
-/* Tab navigation */
+/* Tab navigation styling */
 .tab-container {
 	display: flex;
 	gap: 10px;
@@ -73,7 +82,7 @@ th, td {
 	color: white;
 }
 
-/* Hide all sections by default */
+/* Hide all tab sections by default */
 .tab-content {
 	display: none;
 }

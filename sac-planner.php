@@ -75,148 +75,155 @@ function edt_shortcode() {
     
     <div id="edt">
         <h2>Organise ta semaine Allez'Chante !</h2>
-
-        <!-- Activity Selection -->
         <div id="activity-selection">
-            <h3>Sélection des activités</h3>
+            <h4>Sélection des activités</h4>
 			
-   <!-- Tab Navigation -->
-    <div class="tab-container">
-        <button class="tab-button active" onclick="openTab('stages')">Stages</button>
-        <button class="tab-button" onclick="openTab('cours')">Technique vocale</button>
-        <button class="tab-button" onclick="openTab('repas')">Repas / Logement</button>
-    </div>
+		<!-- Tab Navigation -->
+			<div class="tab-container">
+				<button class="tab-button active" onclick="openTab('stages')">Stages</button>
+				<button class="tab-button" onclick="openTab('cours')">Technique vocale</button>
+				<button class="tab-button" onclick="openTab('repas')">Repas / Logement</button>
+			</div>
 
             <form id="activity-form">
-        <div id="stages" class="tab-content active">
-                <div class="activity-category">
-                    <h3>Stages à la semaine</h3>
-                    <label><input type="checkbox" class="activity-checkbox" value="diapason">Diapa'Son (180€)</label>
-                    <label><input type="checkbox" class="activity-checkbox" value="generason">Généra'Son (60€)* </label>
-					<label><input type="checkbox" class="activity-checkbox" value="enchantillages">Enchantillages (80€)**</label>
-                </div>
-				<div style="font-style: italic; font-size:8pt; line-height:8pt">*: ouvert aux enfants (30€) <br>**: réservé aux enfants</div>
+			
+		<!-- Tab Activités à la semaine -->
+				<div id="stages" class="tab-content active">
+					<div class="activity-category">
+					
+						<h5>Stages à la semaine</h5>
+						
+						<label><input type="checkbox" class="activity-checkbox" value="diapason">Diapa'Son (180€)</label>
+						<label><input type="checkbox" class="activity-checkbox" value="generason">Généra'Son (60€)* </label>
+						<label><input type="checkbox" class="activity-checkbox" value="enchantillages">Enchantillages (80€)**</label>
+					</div>
+					<div style="font-style: italic; font-size:8pt; line-height:8pt">
+						*: ouvert aux enfants (30€) 
+						<br>
+						**: réservé aux enfants
+					</div>
                 </div>
 
-        <div id="cours" class="tab-content">
-
-         <div class="activity-category">
-					<h3>Cours de technique vocale</h3>
+		<!-- Tab Cours de technique vocale -->
+				<div id="cours" class="tab-content">
+					<div class="activity-category">
+					
+						<h5>Cours de technique vocale</h5>
                     
-					<div class="c-dropdown">
-						Progres'Son Individuel - Créneau de 45min (50€)
-						
-						<div class="c-dropdown-content">
-						<table class="c-table">
-							<thead>
-								<tr>
-									<th style="width:20%;"></th>
-									<th>Dim.</th>
-									<th>Lun.</th>
-									<th>Mar.</th>
-									<th>Mer.</th>
-									<th>Jeu.</th>
-									<th>Ven.</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr><td>Matin (10:00-11:30)</td>
-									<td></td>
-									<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_luam"></label></td>
-									<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_maam"></label></td>
-									<td></td>
-									<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_jeam"></label></td>
-									<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_veam"></label></td>
-								</tr>
-								<tr><td>Après-midi (14:00-16:30)</td>
-									<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_dipm"></label></td>
-									<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_lupm"></label></td>
-									<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_mapm"></label></td>
-									<td></td>
-									<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_jepm"></label></td>
-									<td></td>
-								</tr>
-							</tbody>
-						</table>
+						<div class="c-dropdown">
+							Progres'Son Individuel - Créneau de 45min (50€)
+							<div class="c-dropdown-content">
+								<table class="c-table">
+									<thead>
+										<tr>
+											<th style="width:20%;"></th>
+											<th>Dim.</th>
+											<th>Lun.</th>
+											<th>Mar.</th>
+											<th>Mer.</th>
+											<th>Jeu.</th>
+											<th>Ven.</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr><td>Matin (10:00-11:30)</td>
+											<td></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_luam"></label></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_maam"></label></td>
+											<td></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_jeam"></label></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_veam"></label></td>
+										</tr>
+										<tr><td>Après-midi (14:00-16:30)</td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_dipm"></label></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_lupm"></label></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_mapm"></label></td>
+											<td></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_jepm"></label></td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
-					  </div>
             
-            <br style="margin:12px">
-					  <div class="c-dropdown">
-						Progres'Son Collectif (25€)
+						<br style="margin:12px">
 						
-						<div class="c-dropdown-content">
-						<table class="c-table">
-							<thead>
-								<tr>
-									<th style="width:20%;"></th>
-									<th>Dim.</th>
-									<th>Lun.</th>
-									<th>Mar.</th>
-									<th>Mer.</th>
-									<th>Jeu.</th>
-									<th>Ven.</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr><td>Matin (11:40-12:30)</td>
-									<td></td>
-									<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_luam"></label></td>
-									<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_maam"></label></td>
-									<td></td>
-									<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_jeam"></label></td>
-									<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_veam"></label></td>
-								</tr>
-								<tr><td>Après-midi (16:30-17:15)</td>
-									<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_dipm"></label></td>
-									<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_lupm"></label></td>
-									<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_mapm"></label></td>
-									<td></td>
-									<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_jepm"></label></td>
-									<td></td>
-								</tr>
-							</tbody>
-						</table>
+						<div class="c-dropdown">
+							Progres'Son Collectif (25€)
+						
+							<div class="c-dropdown-content">
+								<table class="c-table">
+									<thead>
+										<tr>
+											<th style="width:20%;"></th>
+											<th>Dim.</th>
+											<th>Lun.</th>
+											<th>Mar.</th>
+											<th>Mer.</th>
+											<th>Jeu.</th>
+											<th>Ven.</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr><td>Matin (11:40-12:30)</td>
+											<td></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_luam"></label></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_maam"></label></td>
+											<td></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_jeam"></label></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_veam"></label></td>
+										</tr>
+										<tr><td>Après-midi (16:30-17:15)</td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_dipm"></label></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_lupm"></label></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_mapm"></label></td>
+											<td></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_jepm"></label></td>
+											<td></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
 						</div>
-					  </div><br>
-          </div>
-          </div>
-                
-              <div id="repas" class="tab-content">
+						<br>
+					</div>
+				</div>
+        
+		<!-- Tab Repas/logements -->
+				<div id="repas" class="tab-content">
  
-               <!-- Repas -->
-                <h3>Repas pour la semaine:</h3>
+					<h5>Repas pour la semaine:</h5>
 
-                <label><input type="radio" class="other-radio" name="repas" value="none" checked>Aucun</label>
-                <label><input type="radio" class="other-radio" name="repas" value="repas_midi">Forfait midi (49€)</label>
-                <label><input type="radio" class="other-radio" name="repas" value="repas_total">Forfait complet (107€)</label>
-                
-                <!-- Logements -->
-                <h3>Logement pour la semaine:</h3>
-                <label><input type="radio" class="other-radio" name="logement" value="none" checked>Aucun</label>
-                <label><input type="radio" class="other-radio" name="logement" value="logement_camping">Camping (30€)</label>
-                <label><input type="radio" class="other-radio" name="logement" value="logement_habitant">Chez l'habitant (30€)</label>
-                <label><input type="radio" class="other-radio" name="logement" value="logement_chalet">Location châlet (120€)</label>
+					<label><input type="radio" class="other-radio" name="repas" value="none" checked>Aucun</label>
+					<label><input type="radio" class="other-radio" name="repas" value="repas_midi">Forfait midi (49€)</label>
+					<label><input type="radio" class="other-radio" name="repas" value="repas_total">Forfait complet (107€)</label>
+					
+					<h5>Logement pour la semaine:</h5>
+					
+					<label><input type="radio" class="other-radio" name="logement" value="none" checked>Aucun</label>
+					<label><input type="radio" class="other-radio" name="logement" value="logement_camping">Camping (30€)</label>
+					<label><input type="radio" class="other-radio" name="logement" value="logement_habitant">Chez l'habitant (30€)</label>
+					<label><input type="radio" class="other-radio" name="logement" value="logement_chalet">Location châlet (120€)</label>
                 </div>
-                
                 
             </form>
 
         <!-- Warning Message -->
-        <p id="warning-message" style="color: red; font-weight:bold"></p>
+        <p id="warning-message" class="warn-sing"></p>
 
         <!-- FullCalendar Schedule Display -->
-        <h3>Ton emploi du temps</h3>
+        <h4>Ton emploi du temps</h4>
         <div id="edt-display"></div>
 
         <!-- Price Details -->
 		<div id="price-section">
-			<h4>Détail:</h4>
+			<h5>Détail:</h5>
 			<ul id="price-details"></ul>
-			<h4 id="total-price">Total: €0</h4>
+			<h5 id="total-price">Total: €0</h5>
 		</div>
 		<br>
-		<button id="save-pdf">Enregistrer la simulation (PDF)</button>
+		<button id="save-pdf">Enregistrer le détail de la simulation (PDF)</button>
 
     </div>
 
