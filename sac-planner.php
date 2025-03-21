@@ -97,6 +97,7 @@ function edt_shortcode() {
 						<label><input type="checkbox" class="activity-checkbox" value="diapason">Diapa'Son (180€)</label>
 						<label><input type="checkbox" class="activity-checkbox" value="generason">Généra'Son (60€)* </label>
 						<label><input type="checkbox" class="activity-checkbox" value="enchantillages">Enchantillages (80€)**</label>
+						<label><input type="checkbox" class="activity-checkbox" value="ahcompagnons">Ah'Compagnons - 2 séances coachées + travail en autonomie (90€)</label>
 					</div>
 					<div style="font-style: italic; font-size:8pt; line-height:8pt">
 						*: ouvert aux enfants (30€) 
