@@ -101,11 +101,11 @@ const activity_list = {
 	// Activités communes/obligatoires	
 	"bilan": mk_event("bilan", "Bilans et rangement", "09:30", "12:30", date=wk[6], price=0, col='lightgrey', song=false),
 	"concert": mk_event("concert", "Concert", "18:00", "19:00", date=wk[6], price=0, col='lightgrey', song=false),
-	"reunion": mk_event("reunion", "Réunion d'informations", "09:45", "10:15", date=wk[6], price=0, col='lightgrey', song=false),
+	"reunion": mk_event("reunion", "Réunion d'informations", "09:45", "10:15", date=wk[0], price=0, col='lightgrey', song=false),
 	
 	// Autres activités
-	"bal_folk": mk_event("bal_folk", "Bal folk et scène ouverte", "20:00", "22:00", date=wk[2], price=0, col='lemonchiffon', song=false),
-	"soiree_talents": mk_event("soiree_talents", "Soirée talents", "20:00", "22:00", date=wk[3], price=0, col='lemonchiffon', song=false)
+	"bal_folk": mk_event("bal_folk", "Bal folk et scène ouverte", "20:00", "22:00", date=wk[2], price=0, col='gold', song=false),
+	"soiree_talents": mk_event("soiree_talents", "Soirée talents", "20:00", "22:00", date=wk[3], price=0, col='gold', song=false)
 };
 
 const other_costs = {
@@ -202,12 +202,14 @@ document.addEventListener("DOMContentLoaded", function () {
             const activityName = this.value;
             if (this.checked) {
                 if (addActivity(activityName)) {
+					updateTimePerDay(activityName);
                     updateUI();
                 } else { // if adding the activity fails (e.g. event overlap), then don't check.
                     this.checked = false; 
                 }
             } else {
                 removeActivity(activityName);
+				updateTimePerDay(activityName);
                 updateUI();
             }
         });
@@ -297,8 +299,21 @@ document.addEventListener("DOMContentLoaded", function () {
         totalPriceElement.innerText = `Prix Total: €${(totalPrice).toFixed(2)}`;
     }
 	
-	function updateTotalSungTime() {
-		
+	function updateTimePerDay(activityName) {
+			let activityDuration = activity_list[activityName].extendedProps.duration;
+      
+      // if activity is already in the array, then the function is called to remove the time
+      if(selectedActivities.includes(activityName)){
+      	for (var d of Object.keys(activityDuration)){
+						timePerDay[d] -= activityDuration[d];
+          }
+			} else { // else add the time
+      	  for (var d of Object.keys(activityDuration)){
+						timePerDay[d] += activityDuration[d];
+          }
+      }
+      	
+      
 	}
 
     function addMinutes(time, mins) {
