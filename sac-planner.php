@@ -240,7 +240,7 @@ function edt_shortcode() {
                 
             </form>
 
-        <!-- Warning Message -->
+        <!-- Warning Messages -->
         <p id="warning-message" class="warn-sing"></p>
 
         <!-- FullCalendar Schedule Display -->
@@ -251,7 +251,7 @@ function edt_shortcode() {
 		<div id="price-section">
 			<h5>Détail:</h5>
 			<ul id="price-details"></ul>
-			<h4 id="total-price">Total: €0</h4>
+			<h4 id="total-price">Prix total indicatif : €0</h4>
 		</div>
 		<br>
 		<button id="save-pdf">Enregistrer le détail de la simulation (PDF)</button>
