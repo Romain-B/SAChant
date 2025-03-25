@@ -236,7 +236,6 @@ function edt_shortcode() {
 					<label><input type="radio" class="other-radio" name="logement" value="none" checked>Aucun</label>
 					<label><input type="radio" class="other-radio" name="logement" value="logement_camping">Camping (30€)</label>
 					<label><input type="radio" class="other-radio" name="logement" value="logement_habitant">Chez l'habitant (30€)</label>
-					<label><input type="radio" class="other-radio" name="logement" value="logement_chalet">Location châlet (120€)</label>
                 </div>
                 
             </form>

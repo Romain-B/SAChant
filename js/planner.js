@@ -119,16 +119,17 @@ const activity_list = {
 	"prog_coll_veam": mk_event({id:"prog_coll_veam", title:"Progres'Son Collectif", sTime:"11:40", eTime:"12:25", date:wk[5], price:25, col:'green'}),
 	
 	// explorasons
-	"explo_di": mk_event({id:"prog_coll_dipm", title:"Progres'Son Collectif", sTime:"16:15", eTime:"18:15", date:wk[0], price:30, col:'darkcyan'}),
-	"explo_lu": mk_event({id:"prog_coll_lupm", title:"Progres'Son Collectif", sTime:"16:15", eTime:"18:15", date:wk[1], price:30, col:'darkcyan'}),
-	"explo_ma": mk_event({id:"prog_coll_mapm", title:"Progres'Son Collectif", sTime:"16:15", eTime:"18:15", date:wk[2], price:30, col:'darkcyan'}),
-	"explo_me": mk_event({id:"prog_coll_jepm", title:"Progres'Son Collectif", sTime:"16:15", eTime:"18:15", date:wk[4], price:30, col:'darkcyan'}),
-	"explo_je": mk_event({id:"prog_coll_jepm", title:"Progres'Son Collectif", sTime:"16:15", eTime:"18:15", date:wk[5], price:30, col:'darkcyan'}),
+	"explo_di": mk_event({id:"explo_di", title:"Explora'Son", sTime:"16:15", eTime:"18:15", date:wk[0], price:30, col:'darkcyan'}),
+	"explo_lu": mk_event({id:"explo_lu", title:"Explora'Son", sTime:"16:15", eTime:"18:15", date:wk[1], price:30, col:'darkcyan'}),
+	"explo_ma": mk_event({id:"explo_ma", title:"Explora'Son", sTime:"16:15", eTime:"18:15", date:wk[2], price:30, col:'darkcyan'}),
+	"explo_me": mk_event({id:"explo_me", title:"Explora'Son", sTime:"16:15", eTime:"18:15", date:wk[4], price:30, col:'darkcyan'}),
+	"explo_je": mk_event({id:"explo_je", title:"Explora'Son", sTime:"16:15", eTime:"18:15", date:wk[5], price:30, col:'darkcyan'}),
 
 	// Activités communes/obligatoires	
-	"bilan": mk_event({id:"bilan", title:"Bilans et rangement", sTime:"09:30", eTime:"12:30", date:wk[6], price:0, col:'lightgrey', song:false}),
-	"concert": mk_event({id:"concert", title:"Concert", sTime:"18:00", eTime:"19:00", date:wk[6], price:0, col:'lightgrey', song:true}),
+	"bilan": mk_event({id:"bilan", title:"Bilans et rangement", sTime:"09:30", eTime:"12:00", date:wk[6], price:0, col:'lightgrey', song:false}),
+	"concert": mk_event({id:"concert", title:"Concert", sTime:"18:00", eTime:"19:00", date:wk[5], price:0, col:'lightgrey', song:true}),
 	"reunion": mk_event({id:"reunion", title:"Réunion d'informations", sTime:"09:45", eTime:"10:15", date:wk[0], price:0, col:'lightgrey', song:false}),
+	"acceuil": mk_event({id:"acceuil", title:"Acceuil", sTime:"09:00", eTime:"09:40", date:wk[0], price:0, col:'lightgrey', song:false}),
 	
 	// Autres activités
 	"bal_folk": mk_event({id:"bal_folk", title:"Bal folk et scène ouverte", sTime:"20:00", eTime:"22:00", date:wk[2], price:0, col:'gold', song:false}),
@@ -144,8 +145,8 @@ const other_costs = {
 	repas_midi: {title:"Forfait repas à la semaine (midi)", price:49},
 	repas_total: {title:"Forfait repas à la semaine (complet)", price:107},
 	logement_camping: {title:"Logement camping à la semaine ", price:30},
-	logement_habitant: {title:"Logement chez l'habitant à la semaine ", price:30},
-	logement_chalet: {title:"Logement location de chalet", price:120}
+	logement_habitant: {title:"Logement chez l'habitant à la semaine ", price:30}//,
+	//logement_chalet: {title:"Logement location de chalet", price:120}
 };
 
 
@@ -182,6 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
 			activity_list["bilan"],
 			activity_list["concert"],
 			activity_list["reunion"],
+			activity_list["acceuil"],
 			activity_list["bal_folk"],
 			activity_list["soiree_talents"]
 			],					 // will be defined dynamically.
