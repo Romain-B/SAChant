@@ -388,7 +388,7 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 	// Function to update the warning text when going above max singing time per day
 	function updateWarning(){
-		let warningElement = document.getElementById("warning-message");
+		let warningElement = document.getElementById("warning-singtime");
 		let wString = ""; // to build the warning string
 		let dString = ""; // for days pretty print
 		
@@ -415,7 +415,6 @@ document.addEventListener("DOMContentLoaded", function () {
 		   wString += dString+" égale ou dépasse ce seuil.";
 		}
 		warningElement.innerText = wString;
-		//console.log(timePerDay);
     }
 	
 	// Wrapper function for updating webpage elements when an action is performed

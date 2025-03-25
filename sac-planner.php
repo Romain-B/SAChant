@@ -241,7 +241,8 @@ function edt_shortcode() {
             </form>
 
         <!-- Warning Messages -->
-        <p id="warning-message" class="warn-sing"></p>
+        <p id="warning-singtime" class="warn-msg"></p>
+		<p id="warning-overlap" class="warn-msg"></p>
 
         <!-- FullCalendar Schedule Display -->
         <h4>Emploi du temps de la sélection</h4>

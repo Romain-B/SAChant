@@ -17,7 +17,7 @@ th, td {
 }
 
 /* Warning message style*/
-.warn-sing{
+.warn-msg{
   color: red; 
   font-weight:bold;
   line-height:1;
