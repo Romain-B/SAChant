@@ -525,7 +525,7 @@ savePdfBtn.addEventListener("click", function () {
 	pdf.setTextColor(255, 0, 0);
 	pdf.text("*", 10 + textWidth + 2, line); // Adjust spacing as needed
 
-	line += 20;
+	line += 10;
 	
 	
 
