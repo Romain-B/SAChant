@@ -3,7 +3,7 @@
  * Plugin Name: SAChant
  * Description: Plugin pour plannifier sa semaine Allez'Chant.
  * Plugin URI: https://github.com/Romain-B/SAChant
- * Version:     0.4
+ * Version:     0.5
  * Author:      Romain B, Lucas, Bathilde
  * License:     GPL2
  */
