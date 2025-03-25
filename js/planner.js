@@ -382,7 +382,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
 		
-        totalPriceElement.innerText = `Prix Total: €${(totalPrice).toFixed(2)}`;
+        totalPriceElement.innerText = `Prix total indicatif : €${(totalPrice).toFixed(2)}`;
     }
 	
 	
@@ -475,7 +475,36 @@ savePdfBtn.addEventListener("click", function () {
 	pdf.setFont("Helvetica", "bold");
 	pdf.setFontSize(14);
 	pdf.text(totalPrice.textContent, 10, line);
+	
+	// Add asterisk in red
+	// Get the width of the text to position the asterisk correctly
+	let textWidth = pdf.getTextWidth(totalPrice.textContent);
 
-	line += 15;
+	// Set text color to red
+	pdf.setTextColor(255, 0, 0);
+	pdf.text("*", 10 + textWidth + 2, line); // Adjust spacing as needed
+
+	line += 20;
+	
+	
+
+	// Add the notes and asterisk info
+	pdf.setTextColor(0,0,0);
+	pdf.setFontSize(10);
+	pdf.setFont("Helvetica", "normal");
+
+	// cut the text lines acc. to width
+	let wrappedText = pdf.splitTextToSize("Participants aux activités à la semaine : ces parcours nécéssitent d'être présent.e du dimanche matin (réunion d'information) au samedi midi (rangement et bilan). Vous participerez également aux tâches quotidiennes (cuisine, vaisselle, ménage, rangement, etc.) en vous inscrivant sur un planning.", pdfWidth);
+	pdf.text(wrappedText, 10, line);
+	line +=15;
+
+	// Add the notes and asterisk info
+	pdf.setTextColor(255,0,0);
+	pdf.setFontSize(10);
+	pdf.setFont("Helvetica", "normal");
+
+	wrappedText = pdf.splitTextToSize("*: Toutes nos activités sont à prix libre, l’argent ne devant pas être un frein à votre venue. Le tarif conseillé permet d’équilibrer nos budgets, mais vous pouvez donner plus par solidarité avec celles et ceux qui ne le peuvent pas.", pdfWidth);
+	pdf.text(wrappedText, 10, line);
+
 	pdf.save("simulation_allezchant.pdf");
 });
