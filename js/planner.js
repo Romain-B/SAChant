@@ -250,19 +250,47 @@ document.addEventListener("DOMContentLoaded", function () {
 		
 		
 		
-	// Manage the incompatible events (disable checkbox when the other is checked)
-	const diapason = document.querySelector('input[value="diapason"]');
-	const enchantillages = document.querySelector('input[value="enchantillages"]');
+	// Manage the incompatible events (disable checkbox when the other is checked)  
+    let checkboxes = ['diapason', 'generason', 'enchantillages', 'ahcompagnons'].map(
+        id => document.querySelector(`input[value=${id}]`)
+    );
 
-	function toggleDiapEnch (event){
-		if(event.target.checked){
-			(event.target === diapason ? enchantillages : diapason).disabled = true;
-		} else {
-			(event.target === diapason ? enchantillages : diapason).disabled = false;
-		}
-	}
-	diapason.addEventListener("change", toggleDiapEnch);
-	enchantillages.addEventListener("change", toggleDiapEnch);
+    const diapason = checkboxes[0];
+    const enchantillages = checkboxes[2];
+
+    checkboxes.forEach(checkbox => {
+        checkbox.addEventListener("change", function () {
+            let checkedBoxes = checkboxes.filter(cb => cb.checked);
+
+            // Ensure that only one of diapason and enchantillages is selected
+            if (diapason.checked && enchantillages.checked) {
+                // Uncheck the newly checked one
+                this.checked = false;
+                return;
+            }
+
+            // If two checkboxes are checked, disable the rest
+            if (checkedBoxes.length >= 2) {
+                checkboxes.forEach(cb => {
+                    if (!cb.checked) {
+                        cb.disabled = true; // Disable unchecked checkboxes
+                    }
+                });
+            } else {
+                // Re-enable all checkboxes except the mutually exclusive ones
+                checkboxes.forEach(cb => {
+                    cb.disabled = false;
+                });
+
+                // If one of diapason or enchantillages is checked, disable the other
+                if (diapason.checked) {
+                    enchantillages.disabled = true;
+                } else if (enchantillages.checked) {
+                    diapason.disabled = true;
+                }
+            }
+        });
+    });
   
   
 	//--- Functions to handle backend ---//
