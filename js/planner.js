@@ -156,6 +156,7 @@ const other_costs = {
 document.addEventListener("DOMContentLoaded", function () {
 	let selectedSlots = {}; // Storage array for selected activity start/end times (expanding recurring events)
 	let selectedActivities = [];  // Storage array for selected activity names
+	let selectedOverlaps = []; // Storage array for selected overlapping events
 	let selectedOtherCosts = {    // Storage object for selected extra costs
 		logement: 'none', 
 		repas: 'none'
@@ -210,7 +211,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 selectedSlots[eid].push(
 				{
 					start: new Date(es), // define as new date to enforce format
-					end: new Date(ee)
+					end: new Date(ee),
+					id: eid
 				 });
             });
         }
@@ -274,7 +276,7 @@ document.addEventListener("DOMContentLoaded", function () {
 				e1 = selectedSlots[k][i].end;
 				s1 = selectedSlots[k][i].start;
 				if(s2 < e1 && s1 < e2){
-					return true; // there is overlap
+					return selectedSlots[k][i].id; // there is overlap
 				}
 			}
 		}
@@ -293,11 +295,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
         if(!activity.extendedProps.recur){ // if it's not recurring
 			// check overlap
-			if (hasOverlap(activity_list[activityName])) {
-                alert("❌ Vous ne pouvez pas assister à deux ateliers en même temps !");
-                return false;
-          }
-        }
+			let overlap_id = hasOverlap(activity_list[activityName]); 
+			if (overlap_id != false) {
+				// add the selected activity and its overlapping one to the array
+				selectedOverlaps.push([activityName, overlap_id]);	
+			}
+		}
+        
+		
         calendar.addEvent(activity);
         selectedActivities.push(activityName);
 		updateTimePerDay(activityName);
@@ -306,6 +311,11 @@ document.addEventListener("DOMContentLoaded", function () {
 	
 	// Function to remove an activity
     function removeActivity(activityName) {
+		// Manage overlaps
+		if(selectedOverlaps.some(e => e.some(ei => ei === activityName))){
+			selectedOverlaps = selectedOverlaps.filter(a => !a.some(b => b === activityName));
+		}
+	
 		//remove grouped events
     	if(Object.keys(groups).some(x => x === activityName)){
         	groups[activityName].forEach(removeActivity);
@@ -417,10 +427,24 @@ document.addEventListener("DOMContentLoaded", function () {
 		warningElement.innerText = wString;
     }
 	
+	// Function to update the warning text when there are conflicting events
+	function updateOverlapWarning(){
+		let warningElement = document.getElementById("warning-overlap");
+		let wString = ""; // to build the warning string
+
+		let overlaps = selectedOverlaps.length;
+
+		if(overlaps > 0){
+			wString = `Vous avez ${overlaps} conflit${overlaps > 1 ? 's' : ''} d'emploi du temps dans votre sélection !`;
+		}
+		warningElement.innerText = wString;
+    }
+	
 	// Wrapper function for updating webpage elements when an action is performed
     function updateUI() {
         updatePriceDetails();
 		updateWarning();
+		updateOverlapWarning();
     }
 });
 
@@ -436,6 +460,10 @@ savePdfBtn.addEventListener("click", function () {
 	// Fetch the price detail section
 	let priceList = priceEl.querySelector("#price-details"); // Selects the <ul> list
 	let totalPrice = priceEl.querySelector("#total-price"); // Selects the <h4 id="total-price">
+	
+	// get warning elements
+	let warnTime = document.getElementById("warning-singtime");
+	let warnOver = document.getElementById("warning-overlap");
 
 	// Instantiate the pdf
 	let pdf = new jsPDF('p', 'mm', 'a4');
@@ -451,6 +479,20 @@ savePdfBtn.addEventListener("click", function () {
 	pdf.setFontSize(16);
 	pdf.text("Simulation de semaine Allez'Chante", 10, line);
 	line += 15;
+	
+	// Add the warnings to the pdf
+	pdf.setTextColor(190,0,0);
+	pdf.setFontSize(8);
+
+	if(warnTime.textContent.length > 3){
+		pdf.text(pdf.splitTextToSize(warnTime.textContent, pdfWidth-2*5), 10, line);
+		line+=5;
+	}
+	if(warnOver.textContent.length > 3){
+		pdf.text(warnOver.textContent, 10, line);
+		line+=10;
+	}
+	pdf.setTextColor(0,0,0);
 
 	// Subtitle "Détail:"
 	pdf.setFontSize(14);
