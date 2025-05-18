@@ -128,19 +128,19 @@ function edt_shortcode() {
 										</tr>
 									</thead>
 									<tbody>
-										<tr><td>Matin (10:00-11:30)</td>
+										<tr><td>Matin (10:00-11:40)</td>
 											<td></td>
 											<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_luam"></label></td>
-											<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_maam"></label></td>
 											<td></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_meam"></label></td>
 											<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_jeam"></label></td>
 											<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_veam"></label></td>
 										</tr>
 										<tr><td>Après-midi (14:00-16:30)</td>
 											<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_dipm"></label></td>
 											<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_lupm"></label></td>
-											<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_mapm"></label></td>
 											<td></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_mepm"></label></td>
 											<td><label><input type="checkbox" class="activity-checkbox" value="prog_solo_jepm"></label></td>
 											<td></td>
 										</tr>
@@ -171,16 +171,16 @@ function edt_shortcode() {
 										<tr><td>Matin (11:40-12:30)</td>
 											<td></td>
 											<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_luam"></label></td>
-											<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_maam"></label></td>
 											<td></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_meam"></label></td>
 											<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_jeam"></label></td>
 											<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_veam"></label></td>
 										</tr>
 										<tr><td>Après-midi (16:30-17:15)</td>
 											<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_dipm"></label></td>
 											<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_lupm"></label></td>
-											<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_mapm"></label></td>
 											<td></td>
+											<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_mepm"></label></td>
 											<td><label><input type="checkbox" class="activity-checkbox" value="prog_coll_jepm"></label></td>
 											<td></td>
 										</tr>
@@ -207,10 +207,10 @@ function edt_shortcode() {
 										</tr>
 									</thead>
 									<tbody>
-										<tr><td>16:15-18:15</td>
+										<tr><td>16:30-18:30</td>
 											<td><label><input type="checkbox" class="activity-checkbox" value="explo_di"></label></td>
 											<td><label><input type="checkbox" class="activity-checkbox" value="explo_lu"></label></td>
-											<td><label><input type="checkbox" class="activity-checkbox" value="explo_ma"></label></td>
+											<td></td>
 											<td><label><input type="checkbox" class="activity-checkbox" value="explo_me"></label></td>
 											<td><label><input type="checkbox" class="activity-checkbox" value="explo_je"></label></td>
 										</tr>

@@ -91,39 +91,39 @@ const activity_list = {
 	"enchantillages": mk_event_r({id:"enchantillages", title:"Choeur Enchantillages", sTime:"14:00", eTime:"16:00", price:80, col:"darkturquoise"}),
 	
   	// ahcompagnons
-	"ahcompagnons": mk_event_r({id:"ahcompagnons", title:"Ah'Compagnons", sTime:"11:30", eTime:"12:30", dow:[0], price:90, col:'darkslateblue'}),
-	"ahcompagnons_1": mk_event_r({id:"ahcompagnons_1", title:"Ah'Compagnons", sTime:"11:30", eTime:"11:50", dow:[1,2,4,5], price:0, col:'darkslateblue'}),
-	"ahcompagnons_2": mk_event_r({id:"ahcompagnons_2", title:"Ah'Compagnons", sTime:"11:55", eTime:"12:15", dow:[1,2,4,5], price:0, col:'darkslateblue'}),
-	"ahcompagnons_3": mk_event_r({id:"ahcompagnons_3", title:"Ah'Compagnons", sTime:"18:25", eTime:"18:45", dow:[1,2,3,4], price:0, col:'darkslateblue'}),
+	"ahcompagnons": mk_event_r({id:"ahcompagnons", title:"Ah'Compagnons", sTime:"11:40", eTime:"12:25", dow:[0], price:90, col:'darkslateblue'}),
+	"ahcompagnons_1": mk_event_r({id:"ahcompagnons_1", title:"Ah'Compagnons", sTime:"11:40", eTime:"12:00", dow:[1,3,4,5], price:0, col:'darkslateblue'}),
+	"ahcompagnons_2": mk_event_r({id:"ahcompagnons_2", title:"Ah'Compagnons", sTime:"12:05", eTime:"12:25", dow:[1,3,4,5], price:0, col:'darkslateblue'}),
+	"ahcompagnons_3": mk_event_r({id:"ahcompagnons_3", title:"Ah'Compagnons", sTime:"18:30", eTime:"18:50", dow:[1,3,4], price:0, col:'darkslateblue'}),
 	
 	// progressons indiv après-midi
-	"prog_solo_dipm": mk_event({id:"prog_solo_dipm", title:"Progres'Son Individuel (Créneau 45min)", sTime:"14:00", eTime:"16:15", date:wk[0], price:50, col:'cadetblue'}),
-	"prog_solo_lupm": mk_event({id:"prog_solo_lupm", title:"Progres'Son Individuel (Créneau 45min)", sTime:"14:00", eTime:"16:15", date:wk[1], price:50, col:'cadetblue'}),
-	"prog_solo_mapm": mk_event({id:"prog_solo_mapm", title:"Progres'Son Individuel (Créneau 45min)", sTime:"14:00", eTime:"16:15", date:wk[2], price:50, col:'cadetblue'}),
-	"prog_solo_jepm": mk_event({id:"prog_solo_jepm", title:"Progres'Son Individuel (Créneau 45min)", sTime:"14:00", eTime:"16:15", date:wk[4], price:50, col:'cadetblue'}),
+	"prog_solo_dipm": mk_event({id:"prog_solo_dipm", title:"Progres'Son Individuel (Créneau 45min)", sTime:"14:00", eTime:"16:30", date:wk[0], price:50, col:'cadetblue'}),
+	"prog_solo_lupm": mk_event({id:"prog_solo_lupm", title:"Progres'Son Individuel (Créneau 45min)", sTime:"14:00", eTime:"16:30", date:wk[1], price:50, col:'cadetblue'}),
+	"prog_solo_mepm": mk_event({id:"prog_solo_mapm", title:"Progres'Son Individuel (Créneau 45min)", sTime:"14:00", eTime:"16:30", date:wk[3], price:50, col:'cadetblue'}),
+	"prog_solo_jepm": mk_event({id:"prog_solo_jepm", title:"Progres'Son Individuel (Créneau 45min)", sTime:"14:00", eTime:"16:30", date:wk[4], price:50, col:'cadetblue'}),
 	// progressons indiv matin
-	"prog_solo_luam": mk_event({id:"prog_solo_luam", title:"Progres'Son Individuel (Créneau 45min)", sTime:"10:00", eTime:"11:30", date:wk[1], price:50, col:'cadetblue'}),
-	"prog_solo_maam": mk_event({id:"prog_solo_maam", title:"Progres'Son Individuel (Créneau 45min)", sTime:"10:00", eTime:"11:30", date:wk[2], price:50, col:'cadetblue'}),
-	"prog_solo_jeam": mk_event({id:"prog_solo_jeam", title:"Progres'Son Individuel (Créneau 45min)", sTime:"10:00", eTime:"11:30", date:wk[4], price:50, col:'cadetblue'}),
-	"prog_solo_veam": mk_event({id:"prog_solo_veam", title:"Progres'Son Individuel (Créneau 45min)", sTime:"10:00", eTime:"11:30", date:wk[5], price:50, col:'cadetblue'}),
+	"prog_solo_luam": mk_event({id:"prog_solo_luam", title:"Progres'Son Individuel (Créneau 45min)", sTime:"10:00", eTime:"11:40", date:wk[1], price:50, col:'cadetblue'}),
+	"prog_solo_meam": mk_event({id:"prog_solo_maam", title:"Progres'Son Individuel (Créneau 45min)", sTime:"10:00", eTime:"11:40", date:wk[3], price:50, col:'cadetblue'}),
+	"prog_solo_jeam": mk_event({id:"prog_solo_jeam", title:"Progres'Son Individuel (Créneau 45min)", sTime:"10:00", eTime:"11:40", date:wk[4], price:50, col:'cadetblue'}),
+	"prog_solo_veam": mk_event({id:"prog_solo_veam", title:"Progres'Son Individuel (Créneau 45min)", sTime:"10:00", eTime:"11:40", date:wk[5], price:50, col:'cadetblue'}),
 	
 	// progressons collectif après-midi
 	"prog_coll_dipm": mk_event({id:"prog_coll_dipm", title:"Progres'Son Collectif", sTime:"16:30", eTime:"17:15", date:wk[0], price:25, col:'green'}),
 	"prog_coll_lupm": mk_event({id:"prog_coll_lupm", title:"Progres'Son Collectif", sTime:"16:30", eTime:"17:15", date:wk[1], price:25, col:'green'}),
-	"prog_coll_mapm": mk_event({id:"prog_coll_mapm", title:"Progres'Son Collectif", sTime:"16:30", eTime:"17:15", date:wk[2], price:25, col:'green'}),
+	"prog_coll_mepm": mk_event({id:"prog_coll_mapm", title:"Progres'Son Collectif", sTime:"16:30", eTime:"17:15", date:wk[3], price:25, col:'green'}),
 	"prog_coll_jepm": mk_event({id:"prog_coll_jepm", title:"Progres'Son Collectif", sTime:"16:30", eTime:"17:15", date:wk[4], price:25, col:'green'}),
 	// progressons collectif matin
 	"prog_coll_luam": mk_event({id:"prog_coll_luam", title:"Progres'Son Collectif", sTime:"11:40", eTime:"12:25", date:wk[1], price:25, col:'green'}),
-	"prog_coll_maam": mk_event({id:"prog_coll_maam", title:"Progres'Son Collectif", sTime:"11:40", eTime:"12:25", date:wk[2], price:25, col:'green'}),
+	"prog_coll_meam": mk_event({id:"prog_coll_maam", title:"Progres'Son Collectif", sTime:"11:40", eTime:"12:25", date:wk[3], price:25, col:'green'}),
 	"prog_coll_jeam": mk_event({id:"prog_coll_jeam", title:"Progres'Son Collectif", sTime:"11:40", eTime:"12:25", date:wk[4], price:25, col:'green'}),
 	"prog_coll_veam": mk_event({id:"prog_coll_veam", title:"Progres'Son Collectif", sTime:"11:40", eTime:"12:25", date:wk[5], price:25, col:'green'}),
 	
 	// explorasons
-	"explo_di": mk_event({id:"explo_di", title:"Explora'Son", sTime:"16:15", eTime:"18:15", date:wk[0], price:30, col:'darkcyan'}),
-	"explo_lu": mk_event({id:"explo_lu", title:"Explora'Son", sTime:"16:15", eTime:"18:15", date:wk[1], price:30, col:'darkcyan'}),
-	"explo_ma": mk_event({id:"explo_ma", title:"Explora'Son", sTime:"16:15", eTime:"18:15", date:wk[2], price:30, col:'darkcyan'}),
-	"explo_me": mk_event({id:"explo_me", title:"Explora'Son", sTime:"16:15", eTime:"18:15", date:wk[4], price:30, col:'darkcyan'}),
-	"explo_je": mk_event({id:"explo_je", title:"Explora'Son", sTime:"16:15", eTime:"18:15", date:wk[5], price:30, col:'darkcyan'}),
+	"explo_di": mk_event({id:"explo_di", title:"Explora'Son", sTime:"16:30", eTime:"18:30", date:wk[0], price:30, col:'darkcyan'}),
+	"explo_lu": mk_event({id:"explo_lu", title:"Explora'Son", sTime:"16:30", eTime:"18:30", date:wk[1], price:30, col:'darkcyan'}),
+	//"explo_ma": mk_event({id:"explo_ma", title:"Explora'Son", sTime:"16:30", eTime:"18:30", date:wk[2], price:30, col:'darkcyan'}), //<label><input type="checkbox" class="activity-checkbox" value="explo_ma"></label></td>
+	"explo_me": mk_event({id:"explo_me", title:"Explora'Son", sTime:"16:30", eTime:"18:30", date:wk[4], price:30, col:'darkcyan'}),
+	"explo_je": mk_event({id:"explo_je", title:"Explora'Son", sTime:"16:30", eTime:"18:30", date:wk[5], price:30, col:'darkcyan'}),
 
 	// Activités communes/obligatoires	
 	"bilan": mk_event({id:"bilan", title:"Bilans et rangement", sTime:"09:30", eTime:"12:00", date:wk[6], price:0, col:'lightgrey', song:false}),
@@ -132,8 +132,8 @@ const activity_list = {
 	"acceuil": mk_event({id:"acceuil", title:"Acceuil", sTime:"09:00", eTime:"09:40", date:wk[0], price:0, col:'lightgrey', song:false}),
 	
 	// Autres activités
-	"bal_folk": mk_event({id:"bal_folk", title:"Bal folk et scène ouverte", sTime:"20:00", eTime:"22:00", date:wk[2], price:0, col:'gold', song:false}),
-	"soiree_talents": mk_event({id:"soiree_talents", title:"Soirée talents", sTime:"20:00", eTime:"22:00", date:wk[3], price:0, col:'gold', song:false})
+	"bal_folk": mk_event({id:"bal_folk", title:"Bal folk et scène ouverte", sTime:"20:00", eTime:"22:00", date:wk[3], price:0, col:'gold', song:false}),
+	"soiree_talents": mk_event({id:"soiree_talents", title:"Soirée talents", sTime:"20:00", eTime:"22:00", date:wk[2], price:0, col:'gold', song:false})
 };
 
 // groups of ids for multi-recurrent activities
