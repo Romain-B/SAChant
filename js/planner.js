@@ -122,8 +122,8 @@ const activity_list = {
 	"explo_di": mk_event({id:"explo_di", title:"Explora'Son", sTime:"16:30", eTime:"18:30", date:wk[0], price:30, col:'darkcyan'}),
 	"explo_lu": mk_event({id:"explo_lu", title:"Explora'Son", sTime:"16:30", eTime:"18:30", date:wk[1], price:30, col:'darkcyan'}),
 	//"explo_ma": mk_event({id:"explo_ma", title:"Explora'Son", sTime:"16:30", eTime:"18:30", date:wk[2], price:30, col:'darkcyan'}), //<label><input type="checkbox" class="activity-checkbox" value="explo_ma"></label></td>
-	"explo_me": mk_event({id:"explo_me", title:"Explora'Son", sTime:"16:30", eTime:"18:30", date:wk[4], price:30, col:'darkcyan'}),
-	"explo_je": mk_event({id:"explo_je", title:"Explora'Son", sTime:"16:30", eTime:"18:30", date:wk[5], price:30, col:'darkcyan'}),
+	"explo_me": mk_event({id:"explo_me", title:"Explora'Son", sTime:"16:30", eTime:"18:30", date:wk[3], price:30, col:'darkcyan'}),
+	"explo_je": mk_event({id:"explo_je", title:"Explora'Son", sTime:"16:30", eTime:"18:30", date:wk[4], price:30, col:'darkcyan'}),
 
 	// Activités communes/obligatoires	
 	"bilan": mk_event({id:"bilan", title:"Bilans et rangement", sTime:"09:30", eTime:"12:00", date:wk[6], price:0, col:'lightgrey', song:false}),
